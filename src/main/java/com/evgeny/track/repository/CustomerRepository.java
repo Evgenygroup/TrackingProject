@@ -1,6 +1,5 @@
 package com.evgeny.track.repository;
 
-import com.evgeny.track.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
