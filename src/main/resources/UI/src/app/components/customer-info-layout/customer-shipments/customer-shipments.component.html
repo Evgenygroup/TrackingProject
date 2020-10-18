@@ -1,0 +1,14 @@
+<h4 *ngIf="shipments">Customer {{customerId}} has the following shipments:</h4>
+  <ul class="shipments">
+    <li *ngFor="let shipment of shipments">
+      <div class="row">
+        <div class="col-md-5">
+      <span>{{shipment.id}}</span> {{shipment.description}}
+        </div>
+        <div class="col-md-2">
+          <a class="btn btn-primary btn-sm" [routerLink]="['/app/shipment', shipment.id]">Track shipment</a>
+        </div>
+      </div>
+    </li>
+  </ul>
+

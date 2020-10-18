@@ -1,0 +1,12 @@
+<form [formGroup]="shipmentForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <h3 class="first">Show Customer shipments</h3>
+    <input type="number" pInputText placeholder="Customer ID" class="form-control" formControlName="id">
+    <app-validation-errors [control]="shipmentForm.get('id')"></app-validation-errors>
+    <div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </div>
+</form>
+
+

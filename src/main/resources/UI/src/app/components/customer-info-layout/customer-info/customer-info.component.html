@@ -1,0 +1,10 @@
+<div class="container">
+  <button type="button" class="btn btn-primary btn-sm" (click)="toggleCustomerEditForm()">Edit customer</button>
+  <app-customer-edit *ngIf="showCustomerEditForm" [customer]="this.currentCustomer" (customerUpdated)="onCustomerUpdated($event)"></app-customer-edit>
+  <div *ngIf="showCustomerEdited" class="message">Customer was successfully edited</div>
+
+  <app-customer-shipments></app-customer-shipments>
+
+  <button type="button" class="btn btn-primary btn-sm" (click)="toggleShipmentAddForm()">Add shipment</button>
+  <app-customer-shipment-create *ngIf="display" (shipmentAdded)="onShipmentAdded($event)"></app-customer-shipment-create>
+</div>

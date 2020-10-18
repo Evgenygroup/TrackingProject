@@ -1,0 +1,33 @@
+div.form-group {
+  padding: 30px;
+}
+
+h3 {
+  margin-top: 10px;
+  font-size: 30px;
+  color: darkslategrey;
+}
+
+label {
+  margin-top: 5px;
+  font-size: 20px;
+  color: darkslategrey;
+}
+
+.required-field:after {
+  content: "*";
+  color: red;
+}
+
+input {
+  margin-top: 5px;
+  width: 500px;
+}
+
+.btn-primary {
+  margin-top: 20px;
+  background-color: #007bff;
+  border-radius: 10px;
+  width: 80px;
+  height: 40px;
+}

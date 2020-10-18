@@ -1,0 +1,20 @@
+<div *ngIf="visible">
+<form [formGroup]="shipmentCreateForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+
+    <h4>Add new shipment</h4>
+    <label class="required-field">Shipment description</label>
+    <input type="text" class="form-control" formControlName="description">
+
+    <label class="required-field">Customer ID</label>
+    <input type="text" class="form-control" formControlName="customerId">
+
+    <div>
+      <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+    </div>
+
+  </div>
+</form>
+</div>
+<div *ngIf="displayed">Shipment was successfully added</div>

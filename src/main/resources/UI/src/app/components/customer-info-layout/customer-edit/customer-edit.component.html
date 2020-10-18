@@ -1,0 +1,15 @@
+<form [formGroup]="customerEditForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+
+    <h4>Edit customer data</h4>
+    <label class="required-field">Customer id</label>
+    <input type="text" class="form-control" formControlName="id" [readOnly]="_customer">
+
+    <label class="required-field">Customer name</label>
+    <input type="text" class="form-control" formControlName="name">
+
+    <div>
+      <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+    </div>
+  </div>
+</form>

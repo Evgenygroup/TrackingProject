@@ -1,0 +1,7 @@
+<h2 *ngIf="shipments">List of Shipments</h2>
+<ul class="shipments">
+  <li *ngFor="let shipment of shipments">
+    <span>{{shipment.id}}</span> {{shipment.description}}
+  </li>
+</ul>
+

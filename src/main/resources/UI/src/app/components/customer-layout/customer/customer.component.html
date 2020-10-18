@@ -1,0 +1,4 @@
+<div class="container">
+  <app-customer-create [customer]="currentCustomer" (customerChanged)="onCustomerChanged($event)"></app-customer-create>
+  <app-customer-list [customers]="customers | async"></app-customer-list>
+</div>

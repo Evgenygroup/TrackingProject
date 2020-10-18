@@ -1,0 +1,7 @@
+
+<app-add-shipment  (shipmentAdded)="onShipmentAdded($event)"></app-add-shipment>
+<app-shipment-selector-component (customerIdChanged)="onCustomerIdChanged($event)"></app-shipment-selector-component>
+<div *ngIf="customerError">{{customerError}}</div>
+<app-shipment-list [shipments]="shipments"></app-shipment-list>
+<app-shipment-by-tracking (shipmentIdChanged)="onShipmentIdChanged($event)"></app-shipment-by-tracking>
+<app-shipment-tracking-list [trackings]="trackings"></app-shipment-tracking-list>

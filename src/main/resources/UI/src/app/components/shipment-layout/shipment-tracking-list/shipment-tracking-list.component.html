@@ -1,0 +1,6 @@
+<h2 *ngIf="trackings">List of Shipments</h2>
+<ul class="shipments">
+  <li *ngFor="let tracking of trackings">
+    <span>{{tracking.id}}</span> {{tracking.status}}
+  </li>
+</ul>

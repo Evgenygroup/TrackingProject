@@ -1,0 +1,17 @@
+<form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-group">
+
+    <h4>Create new customer</h4>
+    <label class="required-field">Customer ID</label>
+    <input type="text" class="form-control" formControlName="id">
+
+    <label class="required-field">Customer name</label>
+    <input type="text" class="form-control" formControlName="name">
+
+    <div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+  </div>
+</form>
