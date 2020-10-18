@@ -1,14 +1,24 @@
 plugins {
-    id 'org.springframework.boot' version '2.3.4.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'org.springframework.boot' version '2.2.0.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
+    id "org.flywaydb.flyway" version "6.1.4"
+    id "com.moowork.node" version "1.1.1"
+
+
 }
+
 
 group = 'com.evgeny'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
+
 configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -18,18 +28,88 @@ repositories {
     mavenCentral()
 }
 
+
+node {
+    version = '12.14.1'
+    npmVersion = '6.13.4'
+    download = true
+    workDir = file("${project.projectDir}/node")
+    nodeModulesDir = file("${project.projectDir}/src/main/resources/UI/")
+}
+
+task staticResourcesClean(type: Delete) {
+    delete fileTree("${project.projectDir}/src/main/resources/static") {
+        include '**/*'
+    }
+}
+
+task buildAngularProduction(type: NpmTask, dependsOn: 'npmInstall') {
+    args = ['run', 'build:prod']
+    dependsOn staticResourcesClean
+}
+
+sourceSets {
+    main {
+        resources {
+            exclude '**/UI/*'
+        }
+    }
+}
+
+processResources {
+    if (project.gradle.startParameter.taskNames.contains('assemble'))
+        dependsOn buildAngularProduction
+}
+
+clean {
+    dependsOn staticResourcesClean
+}
+
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'mysql:mysql-connector-java'
+
+    implementation 'org.flywaydb:flyway-core:5.2.4'
+    implementation 'io.springfox:springfox-swagger2:2.9.2'
+    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '0.7.5'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+
+    testImplementation('com.h2database:h2')
 }
 
 test {
     useJUnitPlatform()
 }
+
+flyway {
+    url = 'jdbc:mysql://localhost:3306/tracking_service?autoReconnect=true&useSSL=false&createDatabaseIfNotExist=true&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&lowerCaseTableNames=true'
+    user = 'root'
+    password = 1234
+    schemas = ['tracking_service']
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
