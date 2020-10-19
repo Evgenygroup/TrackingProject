@@ -2,10 +2,13 @@ package com.evgeny.track.service;
 
 import com.evgeny.track.dto.CustomerDto;
 import com.evgeny.track.dto.ShipmentNameDTO;
+import com.evgeny.track.entity.Customer;
+import com.evgeny.track.entity.Shipment;
+import com.evgeny.track.entity.Tracking;
 import com.evgeny.track.exception.CustomerNotFoundException;
-import com.evgeny.track.repositiory.CustomerRepository;
-import com.evgeny.track.repositiory.ShipmentRepository;
-import com.evgeny.track.repositiory.TrackingRepositiory;
+import com.evgeny.track.repository.CustomerRepository;
+import com.evgeny.track.repository.ShipmentRepository;
+import com.evgeny.track.repository.TrackingRepositiory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
