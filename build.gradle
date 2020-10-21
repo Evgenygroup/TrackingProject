@@ -5,13 +5,13 @@ plugins {
     id "org.flywaydb.flyway" version "6.1.4"
     id "com.moowork.node" version "1.1.1"
 
-
 }
 
 
 group = 'com.evgeny'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
 
 
 configurations {
@@ -36,6 +36,7 @@ node {
     workDir = file("${project.projectDir}/node")
     nodeModulesDir = file("${project.projectDir}/src/main/resources/UI/")
 }
+
 
 task staticResourcesClean(type: Delete) {
     delete fileTree("${project.projectDir}/src/main/resources/static") {
@@ -96,20 +97,4 @@ flyway {
     password = 1234
     schemas = ['tracking_service']
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
