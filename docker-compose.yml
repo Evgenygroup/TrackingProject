@@ -18,16 +18,16 @@ services:
       - mysql
 
   mysql:
-    image: library/mysql:latest
+    image: library/mysql:5.7
     healthcheck:
       test: mysql --protocol=socket -hlocalhost -uroot -p$$MYSQL_ROOT_PASSWORD -e 'SELECT 1'
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: tracking_service
+
     ports:
       - "3306:3306"
-    volumes:
-      - my-datavolume:/var/lib/mysql
+
     command: mysqld --sql_mode=""
 
 volumes:
