@@ -14,6 +14,7 @@ import java.util.Date;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "tracking")
 public class Tracking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
