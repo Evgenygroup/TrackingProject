@@ -37,10 +37,10 @@ public class TrackingController {
         return modelMapper.map(service.addTracking(trackingEntity), TrackingDTO.class);
     }
 
-    //@GetMapping("/api/tracking")
-   // public List<Tracking> getAllTrackingWithShipmentsAndTrackings() {
-    //    return service.getAllTracking();
-   // }
+    @GetMapping("/api/tracking")
+    public List<Tracking> getAllTrackingWithShipmentsAndTrackings() {
+        return service.getAllTracking();
+    }
 
     @PostMapping("/api/tracking")
     public Tracking addTracking(@RequestBody TrackingDTO tracking) {
