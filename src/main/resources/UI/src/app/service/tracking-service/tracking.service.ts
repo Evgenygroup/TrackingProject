@@ -14,7 +14,7 @@ export class TrackingService {
   constructor(private http: HttpClient) { }
 
   getTrackingList(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/tracking/`);
+    return this.http.get(`${this.baseUrl}/tracking`);
   }
 
   createTracking(tracking: Tracking): Observable<Tracking> {

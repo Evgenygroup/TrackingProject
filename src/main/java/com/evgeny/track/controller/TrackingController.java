@@ -46,4 +46,8 @@ public class TrackingController {
         return service.addTracking(dbTracking);
     }
 
+    @GetMapping("/api/tracking")
+    public List<Tracking> getAllTrackingWithShipmentsAndTrackings() {
+        return service.getAllTracking();}
+
 }

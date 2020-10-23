@@ -30,4 +30,8 @@ public class TrackingService {
         return trackingRepository.save(tracking);
     }
 
+    public List<Tracking> getAllTracking() {
+        return trackingRepository.findAll();
+    }
+
 }
