@@ -19,8 +19,8 @@ public class CustomerController {
     }
 
     @GetMapping("/api/customers")
-    public List<Customer> getAllCustomersWithShipmentsAndTrackings() {
-        return service.getAllCustomers();
+    public List<Customer> getAllCustomers() {
+        return service.getCustomerList();
     }
 
     @GetMapping("/api/customers/{id}")
@@ -35,7 +35,7 @@ public class CustomerController {
     }
 
     @PutMapping("/api/customers/{id}")
-    public Customer updateCustomer(@PathVariable Long id, @RequestBody CustomerDto customer) {
+    public Customer editCustomer(@PathVariable Long id, @RequestBody CustomerDto customer) {
         return service.updateCustomer(id, customer);
     }
 
