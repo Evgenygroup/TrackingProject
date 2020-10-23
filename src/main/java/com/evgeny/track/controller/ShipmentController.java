@@ -1,53 +1,67 @@
 package com.evgeny.track.controller;
 
+import com.evgeny.track.dto.ShipmentDTO;
 import com.evgeny.track.dto.ShipmentNameDTO;
-import com.evgeny.track.dto.TrackingDTO;
 import com.evgeny.track.entity.Shipment;
-import com.evgeny.track.entity.Tracking;
-import com.evgeny.track.service.TrackingService;
+import com.evgeny.track.service.ShipmentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class ShipmentController {
 
-    private TrackingService service;
-
+    private ShipmentService service;
     private ModelMapper modelMapper;
 
     @Autowired
-    public ShipmentController(TrackingService service, ModelMapper modelMapper) {
+    public ShipmentController(ShipmentService service, ModelMapper modelMapper) {
         this.service = service;
         this.modelMapper = modelMapper;
     }
+
+
+    @GetMapping("/api/customers/{id}/shipments")
+    public List<ShipmentDTO> getShipmentsByCustomerId(@PathVariable long id){
+        return service.getShipmentsByCustomerId(id)
+                .stream()
+                .map(this::convertShipmentToDTOShipment)
+                .collect(Collectors.toList());
+    }
+
+
+    @PostMapping("/api/customers/{customerId}/shipments")
+    public Shipment addShipment(@RequestBody ShipmentDTO shipmentDto, @PathVariable Long customerId) {
+        return service.addShipment(customerId, convertShipmentDtoToShipment(shipmentDto));
+    }
+
 
     @GetMapping("/api/shipment")
     public List<Shipment> getAllTrackingWithShipmentsAndTrackings() {
         return service.getAllShipment();
     }
 
-    @GetMapping("/api/shipment/{id}")
-    public List<Tracking> getTrackingsById(@PathVariable("id") int shipmentId ) {
-        List<Tracking> trackingList = service.getTrackingsByShipmentId(shipmentId);
-
-        return trackingList;
-    }
     @GetMapping("/api/shipments/{shipmentId}")
     public ShipmentNameDTO getCustomerNameByShipmentId(@PathVariable long shipmentId){
         return service.getCustomerByShipmentId(shipmentId);
     }
 
-    @PostMapping("/api/shipments/{id}/trackings")
-    TrackingDTO addTracking(@RequestBody TrackingDTO tracking, @PathVariable long id) {
 
-        Date date = new Date();
-        Tracking trackingEntity = new Tracking(tracking.getTrackingId(),tracking.getStatus(), id, date);
 
-        return modelMapper.map(service.addTracking(trackingEntity), TrackingDTO.class);
+    private Shipment convertShipmentDtoToShipment(ShipmentDTO shipmentDTO) {
+        Shipment shipment = new Shipment();
+        shipment.setDescription(shipmentDTO.getDescription());
+        shipment.setId(shipmentDTO.getId());
+        return  shipment;
+    }
+
+    private ShipmentDTO convertShipmentToDTOShipment(Shipment shipment) {
+        ShipmentDTO shipmentDto = new ShipmentDTO();
+        shipmentDto.setDescription((shipment.getDescription()));
+        shipmentDto.setId(shipment.getId());
+        return  shipmentDto;
     }
 
 }
