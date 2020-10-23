@@ -3,6 +3,7 @@ package com.evgeny.track.config;
 import com.evgeny.track.controller.CustomerController;
 import com.evgeny.track.dto.CustomerDto;
 import com.evgeny.track.entity.Customer;
+import com.evgeny.track.service.CustomerService;
 import com.evgeny.track.service.TrackingService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +30,7 @@ public class CustomerControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private TrackingService service;
+    private CustomerService service;
 
     @Test
     public void testAddCustomer() throws Exception {
