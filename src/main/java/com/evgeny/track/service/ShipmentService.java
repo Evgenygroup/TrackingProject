@@ -30,7 +30,7 @@ public class ShipmentService {
     }
 
 
-    public Shipment addShipment(Long customerId, Shipment shipment) {
+    public Shipment addShipmentByCustomerId(Long customerId, Shipment shipment) {
         Customer customer = customerRepository
                 .getById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(customerId));
@@ -52,11 +52,7 @@ public class ShipmentService {
         Optional<Customer> customer = customerRepository.getById(customerId);
         customer.orElseThrow(()->new CustomerNotFoundException(customerId));
         return new ShipmentNameDTO(customer.get().getName(),shipment.getDescription());
-
-
     }
 
-    public List<Shipment> getAllShipment() {
-        return shipmentRepository.findAll();
-    }
+
 }

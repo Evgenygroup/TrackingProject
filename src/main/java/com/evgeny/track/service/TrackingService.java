@@ -20,7 +20,6 @@ public class TrackingService {
 
     public List<Tracking> getTrackingsByShipmentId(int shipmentId) {
         List<Tracking> trackings = trackingRepository.findAll();
-
         return trackings.stream()
                 .filter(tracking -> null != tracking.getShipmentId() && tracking.getShipmentId() == shipmentId)
                 .collect(Collectors.toList());
@@ -29,10 +28,6 @@ public class TrackingService {
 
     public Tracking addTracking(Tracking tracking) {
         return trackingRepository.save(tracking);
-    }
-
-    public List<Tracking> getAllTracking() {
-        return trackingRepository.findAll();
     }
 
 }

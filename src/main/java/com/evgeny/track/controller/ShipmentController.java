@@ -14,12 +14,11 @@ import java.util.stream.Collectors;
 public class ShipmentController {
 
     private ShipmentService service;
-    private ModelMapper modelMapper;
+
 
     @Autowired
     public ShipmentController(ShipmentService service, ModelMapper modelMapper) {
         this.service = service;
-        this.modelMapper = modelMapper;
     }
 
 
@@ -33,21 +32,15 @@ public class ShipmentController {
 
 
     @PostMapping("/api/customers/{customerId}/shipments")
-    public Shipment addShipment(@RequestBody ShipmentDTO shipmentDto, @PathVariable Long customerId) {
-        return service.addShipment(customerId, convertShipmentDtoToShipment(shipmentDto));
+    public Shipment addShipmentByCustomerId(@RequestBody ShipmentDTO shipmentDto, @PathVariable Long customerId) {
+        return service.addShipmentByCustomerId(customerId, convertShipmentDtoToShipment(shipmentDto));
     }
 
-
-    @GetMapping("/api/shipment")
-    public List<Shipment> getAllTrackingWithShipmentsAndTrackings() {
-        return service.getAllShipment();
-    }
 
     @GetMapping("/api/shipments/{shipmentId}")
     public ShipmentNameDTO getCustomerNameByShipmentId(@PathVariable long shipmentId){
         return service.getCustomerByShipmentId(shipmentId);
     }
-
 
 
     private Shipment convertShipmentDtoToShipment(ShipmentDTO shipmentDTO) {

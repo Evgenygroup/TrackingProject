@@ -19,15 +19,13 @@ public class CustomerService {
 
 
     private CustomerRepository customerRepository;
-    private ShipmentRepository shipmentRepository;
 
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository,
-                           ShipmentRepository shipmentRepository) {
+    public CustomerService(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
-        this.shipmentRepository = shipmentRepository;
     }
+
 
     public Customer addCustomer(CustomerDto customerDto) {
         Customer customer = new Customer();
@@ -36,7 +34,7 @@ public class CustomerService {
     }
 
 
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getCustomerList() {
         return customerRepository.findAll();
     }
 
@@ -50,16 +48,6 @@ public class CustomerService {
         Customer customer = customerRepository.getById(id).orElseThrow(() -> new CustomerNotFoundException(id));
         customer.setName(customerDto.getName());
         return customerRepository.save(customer);
-    }
-
-    public ShipmentNameDTO getCustomerByShipmentId(long shipmentId) {
-        Shipment shipment = shipmentRepository.getOne(shipmentId);
-        long customerId = shipment.getCustomer().getId();
-        Optional<Customer> customer = customerRepository.getById(customerId);
-        customer.orElseThrow(() -> new CustomerNotFoundException(customerId));
-        return new ShipmentNameDTO(customer.get().getName(), shipment.getDescription());
-
-
     }
 
 
