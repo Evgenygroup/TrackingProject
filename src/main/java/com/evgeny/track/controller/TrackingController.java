@@ -21,7 +21,6 @@ public class TrackingController {
         this.modelMapper = modelMapper;
     }
 
-//    @GetMapping("/api/shipment/{shipmentId}")
     @GetMapping("/api/trackings/{shipmentId}/trackings")
     public List<Tracking> getTrackingsByShipmentId(@PathVariable("shipmentId") int shipmentId ) {
         List<Tracking> trackingList = service.getTrackingsByShipmentId(shipmentId);
@@ -29,7 +28,6 @@ public class TrackingController {
         return trackingList;
     }
 
-  //  @PostMapping("/api/shipments/{shipmentId}/trackings")
     @PostMapping("/api/trackings/{shipmentId}/trackings")
     TrackingDTO addTrackingByShipmentId(@RequestBody TrackingDTO tracking, @PathVariable long shipmentId) {
 
@@ -49,7 +47,7 @@ public class TrackingController {
     }
 
     @GetMapping("/api/tracking")
-    public List<Tracking> getAllTrackingWithShipmentsAndTrackings() {
-        return service.getAllTracking();}
+    public List<Tracking> getAllTrackings() {
+        return service.getAllTrackings();}
 
 }

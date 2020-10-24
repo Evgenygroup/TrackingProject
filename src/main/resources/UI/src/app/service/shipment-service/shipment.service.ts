@@ -37,8 +37,10 @@ export class ShipmentService {
   }
 
   getTrackingListByShipmentId(shipmentId:number):Observable<Tracking[]>{
-    return this.http.get<Tracking[]>(`${this.baseUrl}/shipment/${shipmentId}`);
+    return this.http.get<Tracking[]>(`${this.baseUrl}/trackings/${shipmentId}/trackings`);
   }
+  ///api/trackings/{shipmentId}/trackings
+  //`${this.baseUrl}/shipment/${shipmentId}`
 
 
 }

@@ -1,7 +1,6 @@
 package com.evgeny.track.service;
 
 import com.evgeny.track.entity.Tracking;
-import com.evgeny.track.repository.ShipmentRepository;
 import com.evgeny.track.repository.TrackingRepositiory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +29,7 @@ public class TrackingService {
         return trackingRepository.save(tracking);
     }
 
-    public List<Tracking> getAllTracking() {
+    public List<Tracking> getAllTrackings() {
         return trackingRepository.findAll();
     }
 
