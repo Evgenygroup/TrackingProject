@@ -22,16 +22,16 @@ public class ShipmentController {
     }
 
 
-    @GetMapping("/api/customers/{id}/shipments")
-    public List<ShipmentDTO> getShipmentsByCustomerId(@PathVariable long id){
-        return service.getShipmentsByCustomerId(id)
+    @GetMapping("/api/shipments/{customerId}/shipments")
+    public List<ShipmentDTO> getShipmentsByCustomerId(@PathVariable long customerId){
+        return service.getShipmentsByCustomerId(customerId)
                 .stream()
                 .map(this::convertShipmentToDTOShipment)
                 .collect(Collectors.toList());
     }
 
 
-    @PostMapping("/api/customers/{customerId}/shipments")
+    @PostMapping("/api/shipments/{customerId}/shipment")
     public Shipment addShipmentByCustomerId(@RequestBody ShipmentDTO shipmentDto, @PathVariable Long customerId) {
         return service.addShipmentByCustomerId(customerId, convertShipmentDtoToShipment(shipmentDto));
     }

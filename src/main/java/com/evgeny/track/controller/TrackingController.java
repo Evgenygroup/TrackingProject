@@ -21,18 +21,18 @@ public class TrackingController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/api/shipment/{id}")
-    public List<Tracking> getTrackingsByShipmentId(@PathVariable("id") int shipmentId ) {
+    @GetMapping("/api/trackings/{shipmentId}/trackings")
+    public List<Tracking> getTrackingsByShipmentId(@PathVariable("shipmentId") int shipmentId ) {
         List<Tracking> trackingList = service.getTrackingsByShipmentId(shipmentId);
 
         return trackingList;
     }
 
-    @PostMapping("/api/shipments/{id}/trackings")
-    TrackingDTO addTrackingByShipmentId(@RequestBody TrackingDTO tracking, @PathVariable long id) {
+    @PostMapping("/api/trackings/{shipmentId}/trackings")
+    TrackingDTO addTrackingByShipmentId(@RequestBody TrackingDTO tracking, @PathVariable long shipmentId) {
 
         Date date = new Date();
-        Tracking trackingEntity = new Tracking(tracking.getTrackingId(),tracking.getStatus(), id, date);
+        Tracking trackingEntity = new Tracking(tracking.getTrackingId(),tracking.getStatus(), shipmentId, date);
 
         return modelMapper.map(service.addTracking(trackingEntity), TrackingDTO.class);
     }
@@ -45,5 +45,9 @@ public class TrackingController {
 
         return service.addTracking(dbTracking);
     }
+
+    @GetMapping("/api/tracking")
+    public List<Tracking> getAllTrackings() {
+        return service.getAllTrackings();}
 
 }

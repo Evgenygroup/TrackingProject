@@ -31,10 +31,12 @@ export class CustomerService {
   }
 
   getCustomerShipments(id:number): Observable<Shipment[]> {
-    return this.http.get<Shipment[]>(`${this.baseUrl}/customers/${id}/shipments`);
+    return this.http.get<Shipment[]>(`${this.baseUrl}/shipments/${id}/shipments`);
+
   }
 
   createShipment(customerId:number,shipment:Shipment): Observable<Shipment> {
-    return this.http.post<Shipment>(`${this.baseUrl}/customers/${customerId}/shipments`,shipment);
+    return this.http.post<Shipment>(`${this.baseUrl}/shipments/${customerId}/shipment`,shipment);
+
   }
 }
