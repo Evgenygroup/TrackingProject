@@ -19,14 +19,16 @@ export class ShipmentService {
   }
 
   getTrackingByShipmentId(shipmentId: number): Observable<any> {
-    return this.http.get( `${this.baseUrl}/shipment/${shipmentId}` );
+    return this.http.get( `${this.baseUrl}/trackings/${shipmentId}/trackings` );
+
   }
 
   createTrackingByShipmentId(tracking: Tracking):Observable<Tracking>{
     return this.http.post<Tracking>(
-      `${this.baseUrl}/shipments/${tracking.shipmentId}/trackings`,
+      `${this.baseUrl}/trackings/${tracking.shipmentId}/trackings`,
       tracking
     );
+
   }
 
   getCustomernameAndShipmentDescription(shipmentId:number): Observable<CustomerName> {
