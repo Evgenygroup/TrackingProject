@@ -20,7 +20,8 @@ export class ShipmentService {
 
   getTrackingByShipmentId(shipmentId: number): Observable<any> {
     return this.http.get( `${this.baseUrl}/trackings/${shipmentId}/trackings` );
-
+    ///api/trackings/{shipmentId}/trackings
+    //`${this.baseUrl}/shipment/${shipmentId}`
   }
 
   createTrackingByShipmentId(tracking: Tracking):Observable<Tracking>{
