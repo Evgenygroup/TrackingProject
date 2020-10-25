@@ -4,6 +4,7 @@ import com.evgeny.track.entity.Tracking;
 import com.evgeny.track.repository.TrackingRepositiory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,13 +18,9 @@ public class TrackingService {
     }
 
 
-    public List<Tracking> getTrackingsByShipmentId(int shipmentId) {
-        List<Tracking> trackings = trackingRepository.findAll();
-        return trackings.stream()
-                .filter(tracking -> null != tracking.getShipmentId() && tracking.getShipmentId() == shipmentId)
-                .collect(Collectors.toList());
+    public List<Tracking> getTrackingsByShipmentId(Long shipmentId) {
+        return trackingRepository.findAllTrackingsByShipmentId(shipmentId);
     }
-
 
     public Tracking addTracking(Tracking tracking) {
         return trackingRepository.save(tracking);

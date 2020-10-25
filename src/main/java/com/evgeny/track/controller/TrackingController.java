@@ -22,11 +22,10 @@ public class TrackingController {
     }
 
     @GetMapping("/api/trackings/{shipmentId}/trackings")
-    public List<Tracking> getTrackingsByShipmentId(@PathVariable("shipmentId") int shipmentId ) {
-        List<Tracking> trackingList = service.getTrackingsByShipmentId(shipmentId);
+    public List<Tracking> getTrackingsByShipmentId(@PathVariable("shipmentId") long shipmentId ) {
 
-        return trackingList;
-    }
+        return service.getTrackingsByShipmentId(shipmentId);
+            }
 
     @PostMapping("/api/trackings/{shipmentId}/trackings")
     TrackingDTO addTrackingByShipmentId(@RequestBody TrackingDTO tracking, @PathVariable long shipmentId) {
