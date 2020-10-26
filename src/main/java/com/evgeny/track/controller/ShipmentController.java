@@ -2,7 +2,7 @@ package com.evgeny.track.controller;
 
 import com.evgeny.track.dto.ShipmentDTO;
 import com.evgeny.track.dto.ShipmentNameDTO;
-import com.evgeny.track.entity.Shipment;
+import com.evgeny.track.entity.ShipmentEntity;
 import com.evgeny.track.service.ShipmentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class ShipmentController {
 
 
     @PostMapping("/api/shipments/{customerId}/shipment")
-    public Shipment addShipmentByCustomerId(@RequestBody ShipmentDTO shipmentDto, @PathVariable Long customerId) {
+    public ShipmentEntity addShipmentByCustomerId(@RequestBody ShipmentDTO shipmentDto, @PathVariable Long customerId) {
         return service.addShipmentByCustomerId(customerId, convertShipmentDtoToShipment(shipmentDto));
     }
 
@@ -43,14 +43,14 @@ public class ShipmentController {
     }
 
 
-    private Shipment convertShipmentDtoToShipment(ShipmentDTO shipmentDTO) {
-        Shipment shipment = new Shipment();
+    private ShipmentEntity convertShipmentDtoToShipment(ShipmentDTO shipmentDTO) {
+        ShipmentEntity shipment = new ShipmentEntity();
         shipment.setDescription(shipmentDTO.getDescription());
         shipment.setId(shipmentDTO.getId());
         return  shipment;
     }
 
-    private ShipmentDTO convertShipmentToDTOShipment(Shipment shipment) {
+    private ShipmentDTO convertShipmentToDTOShipment(ShipmentEntity shipment) {
         ShipmentDTO shipmentDto = new ShipmentDTO();
         shipmentDto.setDescription((shipment.getDescription()));
         shipmentDto.setId(shipment.getId());

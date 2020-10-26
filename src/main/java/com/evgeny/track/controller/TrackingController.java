@@ -1,7 +1,7 @@
 package com.evgeny.track.controller;
 
 import com.evgeny.track.dto.TrackingDTO;
-import com.evgeny.track.entity.Tracking;
+import com.evgeny.track.entity.TrackingEntity;
 import com.evgeny.track.service.TrackingService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ public class TrackingController {
     }
 
     @GetMapping("/api/trackings/{shipmentId}/trackings")
-    public List<Tracking> getTrackingsByShipmentId(@PathVariable("shipmentId") int shipmentId ) {
-        List<Tracking> trackingList = service.getTrackingsByShipmentId(shipmentId);
+    public List<TrackingEntity> getTrackingsByShipmentId(@PathVariable("shipmentId") int shipmentId ) {
+        List<TrackingEntity> trackingList = service.getTrackingsByShipmentId(shipmentId);
 
         return trackingList;
     }
@@ -32,22 +32,22 @@ public class TrackingController {
     TrackingDTO addTrackingByShipmentId(@RequestBody TrackingDTO tracking, @PathVariable long shipmentId) {
 
         Date date = new Date();
-        Tracking trackingEntity = new Tracking(tracking.getTrackingId(),tracking.getStatus(), shipmentId, date);
+        TrackingEntity trackingEntity = new TrackingEntity(tracking.getTrackingId(),tracking.getStatus(), shipmentId, date);
 
         return modelMapper.map(service.addTracking(trackingEntity), TrackingDTO.class);
     }
 
     @PostMapping("/api/tracking")
-    public Tracking addTracking(@RequestBody TrackingDTO tracking) {
+    public TrackingEntity addTracking(@RequestBody TrackingDTO tracking) {
 
         Date date = new Date();
-        Tracking dbTracking = new Tracking(null, tracking.getStatus(), tracking.getShipmentId(), date);
+        TrackingEntity dbTracking = new TrackingEntity(null, tracking.getStatus(), tracking.getShipmentId(), date);
 
         return service.addTracking(dbTracking);
     }
 
     @GetMapping("/api/tracking")
-    public List<Tracking> getAllTrackings() {
+    public List<TrackingEntity> getAllTrackings() {
         return service.getAllTrackings();}
 
 }

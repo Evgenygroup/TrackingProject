@@ -2,9 +2,8 @@ package com.evgeny.track.config;
 
 import com.evgeny.track.controller.CustomerController;
 import com.evgeny.track.dto.CustomerDto;
-import com.evgeny.track.entity.Customer;
+import com.evgeny.track.entity.CustomerEntity;
 import com.evgeny.track.service.CustomerService;
-import com.evgeny.track.service.TrackingService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +37,7 @@ public class CustomerControllerTest {
                 null,
                 "Ivan Petrov"
         );
-        Customer savedCustomerEntity = new Customer(
+        CustomerEntity savedCustomerEntity = new CustomerEntity(
                 1L,
                 "Ivan Petrov");
         when(service.addCustomer(newCustomer)).thenReturn(savedCustomerEntity);

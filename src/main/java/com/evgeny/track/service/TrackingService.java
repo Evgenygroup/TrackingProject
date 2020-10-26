@@ -1,6 +1,6 @@
 package com.evgeny.track.service;
 
-import com.evgeny.track.entity.Tracking;
+import com.evgeny.track.entity.TrackingEntity;
 import com.evgeny.track.repository.TrackingRepositiory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,19 +17,19 @@ public class TrackingService {
     }
 
 
-    public List<Tracking> getTrackingsByShipmentId(int shipmentId) {
-        List<Tracking> trackings = trackingRepository.findAll();
+    public List<TrackingEntity> getTrackingsByShipmentId(int shipmentId) {
+        List<TrackingEntity> trackings = trackingRepository.findAll();
         return trackings.stream()
                 .filter(tracking -> null != tracking.getShipmentId() && tracking.getShipmentId() == shipmentId)
                 .collect(Collectors.toList());
     }
 
 
-    public Tracking addTracking(Tracking tracking) {
+    public TrackingEntity addTracking(TrackingEntity tracking) {
         return trackingRepository.save(tracking);
     }
 
-    public List<Tracking> getAllTrackings() {
+    public List<TrackingEntity> getAllTrackings() {
         return trackingRepository.findAll();
     }
 
