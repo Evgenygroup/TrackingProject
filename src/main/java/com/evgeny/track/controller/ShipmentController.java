@@ -26,14 +26,18 @@ public class ShipmentController {
     public List<ShipmentDTO> getShipmentsByCustomerId(@PathVariable long customerId){
         return service.getShipmentsByCustomerId(customerId)
                 .stream()
-                .map(this::convertShipmentToDTOShipment)
+                .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
 
 
     @PostMapping("/api/shipments/{customerId}/shipment")
-    public ShipmentEntity addShipmentByCustomerId(@RequestBody ShipmentDTO shipmentDto, @PathVariable Long customerId) {
-        return service.addShipmentByCustomerId(customerId, convertShipmentDtoToShipment(shipmentDto));
+    public ShipmentDTO addShipmentByCustomerId(@RequestBody ShipmentDTO shipmentDto,
+                                               @PathVariable Long customerId) {
+
+        ShipmentEntity shipment = service.addShipmentByCustomerId(customerId, convertToEntity(shipmentDto));
+        return convertToDTO(shipment);
+
     }
 
 
@@ -43,14 +47,14 @@ public class ShipmentController {
     }
 
 
-    private ShipmentEntity convertShipmentDtoToShipment(ShipmentDTO shipmentDTO) {
+    private ShipmentEntity convertToEntity(ShipmentDTO shipmentDTO) {
         ShipmentEntity shipment = new ShipmentEntity();
         shipment.setDescription(shipmentDTO.getDescription());
         shipment.setId(shipmentDTO.getId());
         return  shipment;
     }
 
-    private ShipmentDTO convertShipmentToDTOShipment(ShipmentEntity shipment) {
+    private ShipmentDTO convertToDTO(ShipmentEntity shipment) {
         ShipmentDTO shipmentDto = new ShipmentDTO();
         shipmentDto.setDescription((shipment.getDescription()));
         shipmentDto.setId(shipment.getId());
