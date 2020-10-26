@@ -1,6 +1,8 @@
 package com.evgeny.track.controller;
 
+import com.evgeny.track.dto.ShipmentDTO;
 import com.evgeny.track.dto.TrackingDTO;
+import com.evgeny.track.entity.ShipmentEntity;
 import com.evgeny.track.entity.TrackingEntity;
 import com.evgeny.track.service.TrackingService;
 import org.modelmapper.ModelMapper;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class TrackingController {
@@ -22,11 +25,27 @@ public class TrackingController {
     }
 
     @GetMapping("/api/trackings/{shipmentId}/trackings")
-    public List<TrackingEntity> getTrackingsByShipmentId(@PathVariable("shipmentId") int shipmentId ) {
-        List<TrackingEntity> trackingList = service.getTrackingsByShipmentId(shipmentId);
+    public List<TrackingDTO> getTrackingsByShipmentId(@PathVariable("shipmentId") int shipmentId ) {
+        return  service.getTrackingsByShipmentId(shipmentId)
+                .stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
 
-        return trackingList;
+
     }
+
+    private TrackingDTO convertToDTO(TrackingEntity tracking) {
+        TrackingDTO trackingDto = new TrackingDTO();
+        trackingDto.setTrackingId(tracking.getId());
+        trackingDto.setStatus(tracking.getStatus());
+        trackingDto.setShipmentId(tracking.getShipmentId());
+        trackingDto.setEventDate(tracking.getEventDate());
+
+        return  trackingDto;
+    }
+
+
+
 
     @PostMapping("/api/trackings/{shipmentId}/trackings")
     TrackingDTO addTrackingByShipmentId(@RequestBody TrackingDTO tracking, @PathVariable long shipmentId) {
