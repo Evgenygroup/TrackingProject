@@ -17,7 +17,7 @@ public class TrackingController {
 
 
     @Autowired
-    public TrackingController(TrackingService service, ModelMapper modelMapper) {
+    public TrackingController(TrackingService service) {
         this.service = service;
     }
 
