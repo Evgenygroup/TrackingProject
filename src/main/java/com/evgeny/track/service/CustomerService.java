@@ -18,28 +18,36 @@ public class CustomerService {
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository) {
+
         this.customerRepository = customerRepository;
     }
 
 
+
     public CustomerEntity createCustomer(CustomerEntity customer) {
-         return customerRepository.save(customer);
+
+        return customerRepository.save(customer);
     }
 
 
     public List<CustomerEntity> getCustomerList() {
+
         return customerRepository.findAll();
     }
 
 
+
     public CustomerEntity getCustomerByCustomerId(Long customerId) {
+
         return customerRepository.getOne(customerId);
     }
 
 
     public CustomerEntity updateCustomer(Long id,CustomerEntity customerEntity) {
+
         CustomerEntity customer = customerRepository.getById(id).orElseThrow(() -> new CustomerNotFoundException(id));
         customer.setName(customerEntity.getName());
+
         return customerRepository.save(customer);
     }
 

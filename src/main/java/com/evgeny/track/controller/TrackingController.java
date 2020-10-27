@@ -26,25 +26,13 @@ public class TrackingController {
 
     @GetMapping("/api/trackings/{shipmentId}/trackings")
 
-    public List<TrackingDTO> getTrackingsByShipmentId(@PathVariable("shipmentId") int shipmentId ) {
+    public List<TrackingDTO> getTrackingsByShipmentId(@PathVariable("shipmentId") long shipmentId ) {
         return  service.getTrackingsByShipmentId(shipmentId)
                 .stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
-
-
     }
 
-    private TrackingDTO convertToDTO(TrackingEntity tracking) {
-        TrackingDTO trackingDto = new TrackingDTO();
-        trackingDto.setTrackingId(tracking.getId());
-        trackingDto.setStatus(tracking.getStatus());
-        trackingDto.setShipmentId(tracking.getShipmentId());
-        trackingDto.setEventDate(tracking.getEventDate());
-
-        return  trackingDto;
-    }
-   
 
     @PostMapping("/api/trackings/{shipmentId}/trackings")
     TrackingDTO addTrackingByShipmentId(@RequestBody TrackingDTO tracking, @PathVariable long shipmentId) {
@@ -64,8 +52,14 @@ public class TrackingController {
         return service.addTracking(dbTracking);
     }
 
-    @GetMapping("/api/tracking")
-    public List<TrackingEntity> getAllTrackings() {
-        return service.getAllTrackings();}
+    private TrackingDTO convertToDTO(TrackingEntity tracking) {
+        TrackingDTO trackingDto = new TrackingDTO();
+        trackingDto.setTrackingId(tracking.getId());
+        trackingDto.setStatus(tracking.getStatus());
+        trackingDto.setShipmentId(tracking.getShipmentId());
+        trackingDto.setEventDate(tracking.getEventDate());
+
+        return  trackingDto;
+    }
 
 }

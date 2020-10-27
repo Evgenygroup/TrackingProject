@@ -17,7 +17,7 @@ public class ShipmentController {
 
 
     @Autowired
-    public ShipmentController(ShipmentService service, ModelMapper modelMapper) {
+    public ShipmentController(ShipmentService service) {
         this.service = service;
     }
 
