@@ -29,7 +29,9 @@ public class TrackingController {
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }
-
+/*getTrackingById( id: number ) {
+    return this.http.get(`${this.baseUrl}/tracking/${id}`);
+  }*/
 
     @PostMapping("/api/tracking")
     public TrackingDTO addTracking(@RequestBody TrackingDTO trackingDTO) {

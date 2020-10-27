@@ -43,4 +43,8 @@ export class ShipmentService {
     return this.http.get<Tracking[]>(`${this.baseUrl}/trackings/${shipmentId}/trackings`);
   }
 
+  /*getTrackingList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/tracking`);
+  }*/
+
 }
