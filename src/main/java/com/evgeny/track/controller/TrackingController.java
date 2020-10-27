@@ -25,6 +25,7 @@ public class TrackingController {
     }
 
     @GetMapping("/api/trackings/{shipmentId}/trackings")
+
     public List<TrackingDTO> getTrackingsByShipmentId(@PathVariable("shipmentId") int shipmentId ) {
         return  service.getTrackingsByShipmentId(shipmentId)
                 .stream()
@@ -43,9 +44,7 @@ public class TrackingController {
 
         return  trackingDto;
     }
-
-
-
+   
 
     @PostMapping("/api/trackings/{shipmentId}/trackings")
     TrackingDTO addTrackingByShipmentId(@RequestBody TrackingDTO tracking, @PathVariable long shipmentId) {
