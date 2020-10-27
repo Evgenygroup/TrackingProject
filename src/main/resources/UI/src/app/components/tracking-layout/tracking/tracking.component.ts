@@ -19,20 +19,21 @@ export class TrackingComponent implements OnInit {
   constructor(private trackingService: TrackingService, private shipmentService: ShipmentService) { }
 
   ngOnInit(): void {
-    this.getTrackingList();
+  //  this.getTrackingList();
 
   }
-  getTrackingList() {
-    this.tracking = this.trackingService.getTrackingList();
-  }
+//  getTrackingList() {
+//    this.tracking = this.trackingService.getTrackingList();
+//  }
 
   onTrackingChanged(tracking: Tracking) {
-    this.trackingService.createTracking(tracking).subscribe((newTracking) => {
-      this.getTrackingList();
+    this.trackingService.createTrackingByShipmentId(tracking).subscribe((newTracking) => {
+//      this.getTrackingList();
+//        this.trackingService.getTrackingById(tracking.shipmentId);
     });
   }
 
   onShipmentChanged(id: number) {
-    this.trackingService.getTrackingById(id);
+    this.trackingService.getTrackingByShipmentId(id);
   }
 }

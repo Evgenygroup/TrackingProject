@@ -14,33 +14,22 @@ export class ShipmentService {
   private baseUrl = '/api';
   constructor(private http: HttpClient) { }
 
-  getShipmentList(): Observable<any> {
+ /* getShipmentList(): Observable<any> {
     return this.http.get(`${this.baseUrl}/shipment/`);
+  }*/
+
+  getCustomerShipments(id:number): Observable<Shipment[]> {
+    return this.http.get<Shipment[]>(`${this.baseUrl}/shipments/${id}/shipments`);
+
   }
 
-  getTrackingByShipmentId(shipmentId: number): Observable<any> {
-    return this.http.get( `${this.baseUrl}/trackings/${shipmentId}/trackings` );
-      }
+  createShipment(customerId:number,shipment:Shipment): Observable<Shipment> {
+    return this.http.post<Shipment>(`${this.baseUrl}/shipments/${customerId}/shipment`,shipment);
 
-  /*createTrackingByShipmentId(tracking: Tracking):Observable<Tracking> {
-    return this.http.post<Tracking>(
-      `${this.baseUrl}/trackings/${tracking.shipmentId}/trackings`,
-      tracking);
-  }  */
-
-  createTrackingByShipmentId(tracking: Tracking): Observable<Tracking> {
-    return this.http.post<Tracking>(
-      `${this.baseUrl}/tracking`, tracking);
   }
-
-
 
   getCustomernameAndShipmentDescription(shipmentId:number): Observable<CustomerName> {
     return this.http.get<CustomerName>(`${this.baseUrl}/shipments/${shipmentId}`);
-  }
-
-  getTrackingListByShipmentId(shipmentId:number):Observable<Tracking[]>{
-    return this.http.get<Tracking[]>(`${this.baseUrl}/trackings/${shipmentId}/trackings`);
   }
 
 }

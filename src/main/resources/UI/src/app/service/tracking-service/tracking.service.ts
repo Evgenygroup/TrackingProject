@@ -13,15 +13,22 @@ export class TrackingService {
   private baseUrl = '/api';
   constructor(private http: HttpClient) { }
 
-  getTrackingList(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/tracking`);
+
+  createTrackingByShipmentId(tracking: Tracking): Observable<Tracking> {
+    return this.http.post<Tracking>(
+      `${this.baseUrl}/tracking`, tracking);
   }
 
-  createTracking(tracking: Tracking): Observable<Tracking> {
-    return this.http.post<Tracking>(`${this.baseUrl}/tracking`, tracking);
+  getTrackingByShipmentId(shipmentId: number): Observable<any> {
+    return this.http.get( `${this.baseUrl}/trackings/${shipmentId}/trackings` );
   }
 
-  getTrackingById( id: number ) {
-    return this.http.get(`${this.baseUrl}/tracking/${id}`);
+  getTrackingListByShipmentId(shipmentId:number):Observable<Tracking[]>{
+    return this.http.get<Tracking[]>(`${this.baseUrl}/trackings/${shipmentId}/trackings`);
   }
+
+
+  // getTrackingList(): Observable<any> {
+  //   return this.http.get(`${this.baseUrl}/tracking`);
+  // }
 }
