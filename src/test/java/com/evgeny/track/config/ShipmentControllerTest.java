@@ -1,7 +1,7 @@
 package com.evgeny.track.config;
 
 import com.evgeny.track.controller.ShipmentController;
-import com.evgeny.track.entity.Tracking;
+import com.evgeny.track.entity.TrackingEntity;
 import com.evgeny.track.service.TrackingService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,8 +33,8 @@ public class ShipmentControllerTest {
 
     @Test
     public void testAddTracking() throws Exception {
-        Tracking trackingEntity = new Tracking(null, "delivered", 2L,null);
-        Tracking savedTrackingEntity = new Tracking(1L, "delivered", 2L,null);
+        TrackingEntity trackingEntity = new TrackingEntity(null, "delivered", 2L,null);
+        TrackingEntity savedTrackingEntity = new TrackingEntity(1L, "delivered", 2L,null);
         when(service.addTracking(trackingEntity)).thenReturn(savedTrackingEntity);
 
         mvc.perform(post("/api/shipments/2/trackings")
