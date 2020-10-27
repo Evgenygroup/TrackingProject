@@ -22,13 +22,18 @@ export class ShipmentService {
     return this.http.get( `${this.baseUrl}/trackings/${shipmentId}/trackings` );
       }
 
-  createTrackingByShipmentId(tracking: Tracking):Observable<Tracking>{
+  /*createTrackingByShipmentId(tracking: Tracking):Observable<Tracking> {
     return this.http.post<Tracking>(
       `${this.baseUrl}/trackings/${tracking.shipmentId}/trackings`,
-      tracking
-    );
+      tracking);
+  }  */
 
+  createTrackingByShipmentId(tracking: Tracking): Observable<Tracking> {
+    return this.http.post<Tracking>(
+      `${this.baseUrl}/tracking`, tracking);
   }
+
+
 
   getCustomernameAndShipmentDescription(shipmentId:number): Observable<CustomerName> {
     return this.http.get<CustomerName>(`${this.baseUrl}/shipments/${shipmentId}`);
