@@ -18,17 +18,12 @@ public class TrackingService {
     }
    
 
-    public List<Tracking> getTrackingsByShipmentId(Long shipmentId) {
+    public List<TrackingEntity> getTrackingsByShipmentId(Long shipmentId) {
         return trackingRepository.findAllTrackingsByShipmentId(shipmentId);
     }
 
-    public Tracking addTracking(Tracking tracking) {
-
+    public TrackingEntity addTracking(TrackingEntity tracking) {
         return trackingRepository.save(tracking);
-    }
-
-    public List<TrackingEntity> getAllTrackings() {
-        return trackingRepository.findAll();
     }
 
 }
