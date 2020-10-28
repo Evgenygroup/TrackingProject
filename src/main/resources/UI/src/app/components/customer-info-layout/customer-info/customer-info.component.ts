@@ -5,6 +5,7 @@ import {Shipment} from '../../../model/shipment/shipment';
 import {Observable} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 import {ActivatedRoute, ParamMap, Route} from '@angular/router';
+import {ShipmentService} from "../../../service/shipment-service/shipment.service";
 
 @Component({
   selector: 'app-customer-info',
@@ -22,6 +23,7 @@ export class CustomerInfoComponent implements OnInit {
   showCustomerEdited: boolean = false;
 
   constructor(private customerService: CustomerService,
+              private shipmentService: ShipmentService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class CustomerInfoComponent implements OnInit {
   }
 
   onShipmentAdded(shipment: Shipment) {
-    this.customerService.createShipment(shipment.customerId, shipment).subscribe(
+    this.shipmentService.createShipment(shipment.customerId, shipment).subscribe(
       (shipment) =>  this.shipment = shipment
     );
   }

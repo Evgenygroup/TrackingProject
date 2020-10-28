@@ -5,6 +5,7 @@ import {Shipment} from "../../../model/shipment/shipment";
 import {HttpErrorResponse} from "@angular/common/http";
 import {ShipmentService} from "../../../service/shipment-service/shipment.service";
 import {Tracking} from "../../../model/tracking/tracking";
+import {TrackingService} from "../../../service/tracking-service/tracking.service";
 
 @Component({
   selector: 'app-shipment',
@@ -19,14 +20,15 @@ export class ShipmentComponent implements OnInit {
   customerError: string;
 
 
-  constructor(private customerService: CustomerService, private shipmentService: ShipmentService) {
+  constructor(private shipmentService: ShipmentService,
+              private trackingService: TrackingService) {
   }
 
   ngOnInit(): void {
   }
 
   onCustomerIdChanged(id: number) {
-    this.customerService.getCustomerShipments(id).subscribe(
+    this.shipmentService.getCustomerShipments(id).subscribe(
       shipments => {
         this.shipments = shipments;
         this.customerError = '';
@@ -40,7 +42,7 @@ export class ShipmentComponent implements OnInit {
   }
 
   onShipmentAdded(shipment: Shipment) {
-    this.customerService.createShipment(shipment.customerId, shipment).subscribe((shipment) => {
+    this.shipmentService.createShipment(shipment.customerId, shipment).subscribe((shipment) => {
       this.shipment;
 
     });
@@ -48,7 +50,7 @@ export class ShipmentComponent implements OnInit {
 
   onShipmentIdChanged(id: number) {
     // console.log("Button");
-    this.shipmentService.getTrackingByShipmentId(id).subscribe(
+    this.trackingService.getTrackingByShipmentId(id).subscribe(
       trackings => {
         this.trackings = trackings;
         this.customerError = '';

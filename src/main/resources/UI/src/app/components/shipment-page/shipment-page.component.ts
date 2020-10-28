@@ -4,6 +4,7 @@ import {Tracking} from "../../model/tracking/tracking";
 import {ActivatedRoute, ParamMap} from "@angular/router";
 import {switchMap} from "rxjs/operators";
 import {ShipmentService} from "../../service/shipment-service/shipment.service";
+import {TrackingService} from "../../service/tracking-service/tracking.service";
 
 @Component({
   selector: 'app-shipment-page',
@@ -17,7 +18,9 @@ export class ShipmentPageComponent implements OnInit {
   status: string;
   shipmentId: number;
 
-  constructor(private shipmentService: ShipmentService, private route: ActivatedRoute) {
+  constructor(private shipmentService: ShipmentService,
+              private trackingService: TrackingService,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
@@ -35,7 +38,7 @@ export class ShipmentPageComponent implements OnInit {
   }
 
   getTrackingList() {
-    this.shipmentService.getTrackingListByShipmentId(Number(this.shipmentId)).subscribe(
+    this.trackingService.getTrackingListByShipmentId(Number(this.shipmentId)).subscribe(
       (trackings: Tracking[]) => this.trackings = trackings
     );
   }
@@ -45,7 +48,7 @@ export class ShipmentPageComponent implements OnInit {
   }
 
   addStatus(tracking: Tracking) {
-    this.shipmentService.createTrackingByShipmentId(tracking).subscribe(
+    this.trackingService.createTrackingByShipmentId(tracking).subscribe(
       tracking => this.getTrackingList()
     );
   }
