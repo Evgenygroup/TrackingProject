@@ -48,7 +48,7 @@ public class ShipmentService {
 
     public ShipmentNameDTO getCustomerByShipmentId(long shipmentId){
         ShipmentEntity shipment = shipmentRepository.getOne(shipmentId);
-        long customerId =shipment.getCustomer().getId();
+        Long customerId =shipment.getCustomer().getId();
         Optional<CustomerEntity> customer = customerRepository.getById(customerId);
         customer.orElseThrow(()->new CustomerNotFoundException(customerId));
         return new ShipmentNameDTO(customer.get().getName(),shipment.getDescription());

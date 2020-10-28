@@ -23,7 +23,7 @@ public class ShipmentController {
 
 
     @GetMapping("/api/shipments/{customerId}/shipments")
-    public List<ShipmentDTO> getShipmentsByCustomerId(@PathVariable long customerId){
+    public List<ShipmentDTO> getShipmentsByCustomerId(@PathVariable Long customerId){
         return service.getShipmentsByCustomerId(customerId)
                 .stream()
                 .map(this::convertToDTO)
@@ -42,7 +42,7 @@ public class ShipmentController {
 
 
     @GetMapping("/api/shipments/{shipmentId}")
-    public ShipmentNameDTO getCustomerNameByShipmentId(@PathVariable long shipmentId){
+    public ShipmentNameDTO getCustomerNameByShipmentId(@PathVariable Long shipmentId){
         return service.getCustomerByShipmentId(shipmentId);
     }
 

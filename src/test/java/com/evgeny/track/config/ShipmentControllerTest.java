@@ -31,6 +31,33 @@ public class ShipmentControllerTest {
     private TrackingService service;
 
 
+    /*@Test
+    public void testAddShipment() throws Exception {
+        Shipment shipmentEntity = new Shipment(
+                null,
+                "Sony TV",
+                7L,
+                null);
+        Shipment savedShipmentEntity = new Shipment(
+                5L,
+                "Sony TV",
+                7L,
+                null);
+        when(service.addShipment(shipmentEntity)).thenReturn(savedShipmentEntity);
+
+        mvc.perform(post("/api/customers/7/shipments")
+                .content("{\"description\": \"Sony TV\",\"customerId\":\"7\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.shipmentId").value("5"))
+                .andExpect(jsonPath("$.description").value("Sony TV"))
+                .andExpect(jsonPath("$.customerId").value("7"));
+
+        verify(service, times(1)).addShipment(shipmentEntity);
+    }*/
+
+
     @Test
     public void testAddTracking() throws Exception {
         TrackingEntity trackingEntity = new TrackingEntity(null, "delivered", 2L,null);
