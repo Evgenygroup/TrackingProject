@@ -46,6 +46,11 @@ public class CustomerController {
         return convertToDto(customer);
     }
 
+    @DeleteMapping("/api/customer/{id}")
+    public void removeCustomer(@PathVariable long id){
+        service.deleteCustomer(id);
+    }
+
 
     private CustomerDto convertToDto(CustomerEntity customerEntity) {
         CustomerDto customerDto =new CustomerDto();

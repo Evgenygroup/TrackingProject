@@ -52,4 +52,9 @@ public class CustomerService {
     }
 
 
+    public void deleteCustomer(long id) {
+        customerRepository.deleteById(id);
+
+
+    }
 }
