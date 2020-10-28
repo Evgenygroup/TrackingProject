@@ -1,8 +1,11 @@
 package com.evgeny.track.controller;
+
 import com.evgeny.track.entity.CustomerEntity;
 import com.evgeny.track.dto.CustomerDto;
 import com.evgeny.track.service.CustomerService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,23 +21,23 @@ public class CustomerController {
 
     @GetMapping("/api/customers")
     public List<CustomerDto> getAllCustomers() {
-       List<CustomerEntity> customers = service.getCustomerList();
-       return customers.stream()
-               .map(this::convertToDto)
-               .collect(Collectors.toList());
+        List<CustomerEntity> customers = service.getCustomerList();
+        return customers.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
     }
 
 
     @GetMapping("/api/customers/{id}")
-    public CustomerDto getCustomerById(@PathVariable long id){
-       return convertToDto(service.getCustomerByCustomerId(id));
+    public CustomerDto getCustomerById(@PathVariable long id) {
+        return convertToDto(service.getCustomerByCustomerId(id));
     }
 
 
     @PostMapping("/api/customers")
     public CustomerDto createNewCustomer(@RequestBody CustomerDto customerDto) {
         CustomerEntity customer = convertToEntity(customerDto);
-        CustomerEntity customerCreated =service.createCustomer(customer);
+        CustomerEntity customerCreated = service.createCustomer(customer);
         return convertToDto(customerCreated);
     }
 
@@ -47,24 +50,24 @@ public class CustomerController {
     }
 
     @DeleteMapping("/api/customer/{id}")
-    public void removeCustomer(@PathVariable long id){
+    public ResponseEntity<String> removeCustomer(@PathVariable long id) {
         service.deleteCustomer(id);
+        return ResponseEntity.ok().body("Customer and his/her shipments were successfully deleted!");
+
     }
 
-
     private CustomerDto convertToDto(CustomerEntity customerEntity) {
-        CustomerDto customerDto =new CustomerDto();
+        CustomerDto customerDto = new CustomerDto();
         customerDto.setId(customerEntity.getId());
         customerDto.setName(customerEntity.getName());
         return customerDto;
     }
 
     private CustomerEntity convertToEntity(CustomerDto customerDto) {
-        CustomerEntity customer=new CustomerEntity();
+        CustomerEntity customer = new CustomerEntity();
         customer.setName(customerDto.getName());
         return customer;
     }
-
 
 
 }
