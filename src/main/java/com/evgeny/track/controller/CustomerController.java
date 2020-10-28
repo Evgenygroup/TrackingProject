@@ -29,7 +29,7 @@ public class CustomerController {
 
 
     @GetMapping("/api/customers/{id}")
-    public CustomerDto getCustomerById(@PathVariable long id) {
+    public CustomerDto getCustomerById(@PathVariable Long id) {
         return convertToDto(service.getCustomerByCustomerId(id));
     }
 
@@ -50,7 +50,7 @@ public class CustomerController {
     }
 
     @DeleteMapping("/api/customer/{id}")
-    public ResponseEntity<String> removeCustomer(@PathVariable long id) {
+    public ResponseEntity<String> removeCustomer(@PathVariable Long id) {
         service.deleteCustomer(id);
         return ResponseEntity.ok().body("Customer and his/her shipments were successfully deleted!");
 

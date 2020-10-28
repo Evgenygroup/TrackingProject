@@ -23,7 +23,7 @@ public class TrackingController {
 
 
     @GetMapping("/api/trackings/{shipmentId}/trackings")
-    public List<TrackingDTO> getTrackingsByShipmentId(@PathVariable("shipmentId") long shipmentId) {
+    public List<TrackingDTO> getTrackingsByShipmentId(@PathVariable("shipmentId") Long shipmentId) {
         return service.getTrackingsByShipmentId(shipmentId)
                 .stream()
                 .map(this::convertToDTO)
