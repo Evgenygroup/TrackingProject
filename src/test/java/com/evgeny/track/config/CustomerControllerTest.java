@@ -117,37 +117,31 @@ public class CustomerControllerTest {
                 .andDo(print());
     }
 
+
+
     @Test
-    public void testEditCustomerNotFound() throws Exception {
-        CustomerEntity newCustomer = new CustomerEntity(6L, "Evgeny");
-        CustomerDto updatedCustomerDto = new CustomerDto(null,"rtz");
-        Long fakeId = 12345L;
-        String json = mapper.writeValueAsString(updatedCustomerDto);
-
-        when(service.updateCustomer(fakeId,newCustomer)).thenThrow(new CustomerNotFoundException(fakeId));
-
-        mvc.perform(put("/api/customers/{id}",fakeId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
-                .andExpect(status().isNotFound())
+    public void removeCustomerByIdSuccess() throws Exception {
+        Long id = 123L;
+        mvc.perform(delete("/api/customers/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
                 .andDo(print());
-
-
-        verify(service, times(1)).createCustomer(newCustomer);
+        verify(service, times(1)).deleteCustomer(id);
     }
 
-    /* @Test
-    public void updateEmployeeById_notFound() throws Exception {
-        EmployeeDto updatedEmployeeDto = mockEmployeeUpdateDto();
-        String id = "123fakeUUID";
-        String json = mapper.writeValueAsString(updatedEmployeeDto);
-        when(this.employeeService.saveUpdatedEmployee(id, updatedEmployeeDto)).thenThrow(new ResourceNotFoundException("Not found", "business profile", id));
-        mvc.perform(put("/employees/{id}", id).with(httpBasic("user", "password"))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
+
+    @Test
+    public void removeCustomerByIdNotFound() throws Exception {
+        Long fakeId = 123L;
+        doThrow(new CustomerNotFoundException(fakeId)).when(service).deleteCustomer(fakeId);
+        mvc.perform(delete("/api/customers/{id}", fakeId)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andDo(print());
-    }*/
+        verify(service, times(1)).deleteCustomer(fakeId);
+    }
+
+
 
 
 

@@ -49,7 +49,7 @@ public class CustomerController {
         return convertToDto(customer);
     }
 
-    @DeleteMapping("/api/customer/{id}")
+    @DeleteMapping("/api/customers/{id}")
     public ResponseEntity<String> removeCustomer(@PathVariable Long id) {
         service.deleteCustomer(id);
         return ResponseEntity.ok().body("Customer and his/her shipments were successfully deleted!");
