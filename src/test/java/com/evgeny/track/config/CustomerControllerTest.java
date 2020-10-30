@@ -51,7 +51,7 @@ public class CustomerControllerTest {
 
     @Test
     public void testCreateCustomerSuccess() throws Exception {
-        CustomerEntity newCustomer = savedCustomer;
+        CustomerEntity newCustomer = new CustomerEntity(null,"Evgeny Grazhdansky");
 
         when(service.createCustomer(newCustomer)).thenReturn(savedCustomer);
 
@@ -116,15 +116,14 @@ public class CustomerControllerTest {
 
     @Test
     public void testEditCustomerSuccess() throws Exception {
-        CustomerEntity newCustomer = new CustomerEntity(
-                null,
-                "Evgeny Grazhdansky"
-        );
+        CustomerEntity newCustomer = new CustomerEntity(null,"Evgeny Grazhdansky");
+        String json = mapper.writeValueAsString(new CustomerDto(6L,"Evgeny Grazhdansky"));
+
 
         when(service.updateCustomer(6L,newCustomer)).thenReturn(savedCustomer);
 
-        mvc.perform(put("/api/customers/{id}" ,6L)
-                .content("{\"name\": \"Evgeny Grazhdansky\"}")
+        mvc.perform(put("/api/customers/6")
+                .content(json)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())

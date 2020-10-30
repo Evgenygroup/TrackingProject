@@ -18,6 +18,7 @@ public class ShipmentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String description;
 
     @ManyToOne(cascade = CascadeType.ALL)
