@@ -44,17 +44,14 @@ public class CustomerControllerTest {
 
     private CustomerEntity savedCustomer;
 
- //   @Before
-  //  public void init(){
-  //      savedCustomer=mockCustomerEntity();
-  //  }
+    @Before
+    public void init(){
+        savedCustomer=mockCustomerEntity();
+    }
 
     @Test
     public void testCreateCustomerSuccess() throws Exception {
-        CustomerEntity newCustomer = new CustomerEntity(
-                null,
-                "Evgeny Grazhdansky"
-        );
+        CustomerEntity newCustomer = savedCustomer;
 
         when(service.createCustomer(newCustomer)).thenReturn(savedCustomer);
 
@@ -117,7 +114,47 @@ public class CustomerControllerTest {
                 .andDo(print());
     }
 
+    @Test
+    public void testEditCustomerSuccess() throws Exception {
+        CustomerEntity newCustomer = new CustomerEntity(
+                null,
+                "Evgeny Grazhdansky"
+        );
 
+        when(service.updateCustomer(6L,newCustomer)).thenReturn(savedCustomer);
+
+        mvc.perform(put("/api/customers/{id}" ,6L)
+                .content("{\"name\": \"Evgeny Grazhdansky\"}")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.id").value("6"))
+                .andExpect(jsonPath("$.name").value("Evgeny Grazhdansky"));
+
+        verify(service, times(1)).createCustomer(newCustomer);
+    }
+
+
+/*@Test
+    public void updateEmployeeById_success() throws Exception {
+        EmployeeDto updatedEmployeeDto = mockEmployeeUpdateDto();
+        Employee updatedEmployee = mockUpdatedEmployee();
+        String id = updatedEmployee.getId();
+        String json = mapper.writeValueAsString(updatedEmployeeDto);
+
+        when(this.employeeService.saveUpdatedEmployee(id, updatedEmployeeDto)).thenReturn(updatedEmployee);
+
+        mvc.perform(put("/employees/{id}", id).with(httpBasic("user", "password"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(updatedEmployee.getId()))
+                .andExpect(jsonPath("$.fullName").value(updatedEmployee.getFullName()))
+                .andExpect(jsonPath("$.email").value(updatedEmployee.getEMail()))
+                .andExpect(jsonPath("$.hobbies").value(updatedEmployee.getHobbies()))
+                .andDo(print());
+    }
+*/
 
     @Test
     public void removeCustomerByIdSuccess() throws Exception {
