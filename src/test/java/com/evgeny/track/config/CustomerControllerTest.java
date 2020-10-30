@@ -133,28 +133,6 @@ public class CustomerControllerTest {
         verify(service, times(1)).createCustomer(newCustomer);
     }
 
-
-/*@Test
-    public void updateEmployeeById_success() throws Exception {
-        EmployeeDto updatedEmployeeDto = mockEmployeeUpdateDto();
-        Employee updatedEmployee = mockUpdatedEmployee();
-        String id = updatedEmployee.getId();
-        String json = mapper.writeValueAsString(updatedEmployeeDto);
-
-        when(this.employeeService.saveUpdatedEmployee(id, updatedEmployeeDto)).thenReturn(updatedEmployee);
-
-        mvc.perform(put("/employees/{id}", id).with(httpBasic("user", "password"))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(updatedEmployee.getId()))
-                .andExpect(jsonPath("$.fullName").value(updatedEmployee.getFullName()))
-                .andExpect(jsonPath("$.email").value(updatedEmployee.getEMail()))
-                .andExpect(jsonPath("$.hobbies").value(updatedEmployee.getHobbies()))
-                .andDo(print());
-    }
-*/
-
     @Test
     public void removeCustomerByIdSuccess() throws Exception {
         Long id = 123L;
