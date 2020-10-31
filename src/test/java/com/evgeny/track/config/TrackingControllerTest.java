@@ -79,46 +79,23 @@ public class TrackingControllerTest {
 
         return Arrays.asList(tracking1,tracking2,tracking3);
     }
-
-
-
-
-  /*  @Test
-    public void testAddTracking() throws Exception {
-        Tracking trackingEntity = new Tracking(null, "delivered",2L);
-        Tracking savedTrackingEntity = new Tracking(1L, "delivered",2L);
-        when(service.addTracking(trackingEntity)).thenReturn(savedTrackingEntity);
-
-        mvc.perform(post("/api/shipments/2/trackings")
-                .content("{\"status\": \"delivered\",\"shipmentId\":\"2\"}")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(jsonPath("$.trackingId").value("1"))
-                .andExpect(jsonPath("$.status").value("delivered"))
-                .andExpect(jsonPath("$.shipmentId").value("2"));
-
-        verify(service, times(1)).addTracking(trackingEntity);
-    }*/
-
     @Test
     public void testAddTracking() throws Exception {
+        Date date = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY).parse("2020-11-20");
         TrackingEntity trackingEntity = new TrackingEntity(null, "delivered", 2L,null);
-        TrackingEntity savedTrackingEntity = new TrackingEntity(1L, "delivered", 2L,null);
-        //   when(service.addTracking(trackingEntity)).thenReturn(savedTrackingEntity);
+        TrackingEntity savedTrackingEntity = new TrackingEntity(1L, "delivered", 2L,date);
+           when(service.addTracking(trackingEntity)).thenReturn(savedTrackingEntity);
 
-        mvc.perform(post("/api/shipments/2/trackings")
-                .content("{\"status\": \"delivered\",\"shipmentId\":\"2\"}")
+        mvc.perform(post("/api/tracking")
+                .content("{\"status\":\"delivered\",\"shipmentId\":\"2\"}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(jsonPath("$.trackingId").value("1"))
+                .andExpect(jsonPath("$.id").value("1"))
                 .andExpect(jsonPath("$.status").value("delivered"))
                 .andExpect(jsonPath("$.shipmentId").value("2"));
 
-        //    verify(service, times(1)).addTracking(trackingEntity);
+           verify(service, times(1)).addTracking(trackingEntity);
     }
-
-
 }
 
