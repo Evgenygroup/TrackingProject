@@ -43,10 +43,19 @@ public class TrackingControllerTest {
 
     @Test
     public void testGetTrackingsByShipmentId() throws Exception {
+        Date date = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY).parse("2020-11-20");
+   //   Date date =null;
+
+
+        TrackingEntity tracking1 =new TrackingEntity (1L,"initiated",3L,date);
+        TrackingEntity tracking2 =new TrackingEntity(2L,"delivered",4L,date);
+        TrackingEntity tracking3 =new TrackingEntity(3L,"returned",5L,date);
+        List list =Arrays.asList(tracking1,tracking2,tracking3);
         Long shipmentId = 7L;
-        String date ="2020-11-19";
+        String date1 ="2020-11-19";
+   //   String date1 =null;
         when(service.getTrackingsByShipmentId(shipmentId))
-                .thenReturn(createListOfTrackings());
+                .thenReturn(list);
 
 
         mvc.perform(get("/api/trackings/{shipmentId}/trackings",shipmentId)
@@ -56,21 +65,22 @@ public class TrackingControllerTest {
                 .andExpect(jsonPath("$[0].trackingId").value("1"))
                 .andExpect(jsonPath("$[0].status").value("initiated"))
                 .andExpect(jsonPath("$[0].shipmentId").value("3"))
-                .andExpect(jsonPath("$[0].eventDate").value(date))
+                .andExpect(jsonPath("$[0].eventDate").value(date1))
                 .andExpect(jsonPath("$[1].trackingId").value("2"))
                 .andExpect(jsonPath("$[1].status").value("delivered"))
                 .andExpect(jsonPath("$[1].shipmentId").value("4"))
-                .andExpect(jsonPath("$[1].eventDate").value(date))
+                .andExpect(jsonPath("$[1].eventDate").value(date1))
                 .andExpect(jsonPath("$[2].trackingId").value("3"))
                 .andExpect(jsonPath("$[2].status").value("returned"))
                 .andExpect(jsonPath("$[2].shipmentId").value("5"))
-                .andExpect(jsonPath("$[2].eventDate").value(date));
+                .andExpect(jsonPath("$[2].eventDate").value(date1));
         verify(service, times(1)).getTrackingsByShipmentId(shipmentId);
     }
 
-    private List<TrackingEntity> createListOfTrackings()throws Exception {
+    private List<TrackingEntity> createListOfTrackings() throws Exception {
 
-        Date date = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY).parse("2020-11-20");
+      Date date = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY).parse("2020-11-20");
+
 
 
         TrackingEntity tracking1 =new TrackingEntity (1L,"initiated",3L,date);
