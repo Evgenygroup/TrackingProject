@@ -41,7 +41,7 @@ public class CustomerService {
 
     public CustomerEntity getCustomerByCustomerId(Long customerId) {
 
-        return customerRepository.getOne(customerId);
+        return customerRepository.getById(customerId).orElseThrow(() -> new CustomerNotFoundException(customerId));
     }
 
 
