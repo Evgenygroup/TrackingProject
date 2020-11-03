@@ -47,7 +47,7 @@ public class CustomerService {
 
     public CustomerEntity updateCustomer(Long id,CustomerEntity customerEntity) {
 
-        CustomerEntity customer = customerRepository.getById(id).orElseThrow(() -> new CustomerNotFoundException(id));
+        CustomerEntity customer = customerRepository.findById(id).orElseThrow(() -> new CustomerNotFoundException(id));
         customer.setName(customerEntity.getName());
 
         return customerRepository.save(customer);

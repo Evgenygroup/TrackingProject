@@ -1,6 +1,7 @@
-package com.evgeny.track.config;
+package com.evgeny.track.config.controller;
 
 
+import com.evgeny.track.config.TestConfig;
 import com.evgeny.track.controller.TrackingController;
 import com.evgeny.track.entity.TrackingEntity;
 import com.evgeny.track.service.TrackingService;
