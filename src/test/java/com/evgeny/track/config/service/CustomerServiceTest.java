@@ -9,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -23,6 +24,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(SpringRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceTest {
 
     @Mock
@@ -101,7 +103,7 @@ public class CustomerServiceTest {
         CustomerEntity newCustomer = new CustomerEntity(1L,"Evgeny Grazhdansky");
         CustomerEntity oldCustomer = new CustomerEntity(1L,"John Smith");
 
-        when(customerRepository.findById(newCustomer.getId())).thenReturn(Optional.of(oldCustomer));
+        when(customerRepository.getById(newCustomer.getId())).thenReturn(Optional.of(oldCustomer));
         CustomerEntity customerActual = customerService.updateCustomer(1L, newCustomer);
 
         assertEquals(newCustomer.getId(),customerActual.getId());

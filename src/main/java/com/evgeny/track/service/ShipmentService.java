@@ -35,6 +35,7 @@ public class ShipmentService {
                 .getById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(customerId));
         shipment.setCustomer(customer);
+
         return shipmentRepository.save(shipment);
     }
 
