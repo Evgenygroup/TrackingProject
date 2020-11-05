@@ -1,5 +1,6 @@
 package com.evgeny.track.config.service;
 
+import com.evgeny.track.dto.ShipmentNameDTO;
 import com.evgeny.track.entity.CustomerEntity;
 import com.evgeny.track.entity.ShipmentEntity;
 import com.evgeny.track.exception.CustomerNotFoundException;
@@ -87,5 +88,24 @@ public class ShipmentServiceTest {
         verify(shipmentRepository, times(0)).findAllShipmentsByCustomerId(any());
         assertEquals("Customer not found", exception.getMessage());
     }
+    @Test
+    public void testGetCustomerByShipmentId() {
+        CustomerEntity customer = new CustomerEntity(1L, "Evgeny Grazhdansky");
+        ShipmentEntity shipment = new ShipmentEntity(
+                1L,
+                "test shipment",
+                customer,
+                null);
 
-}
+        when(shipmentRepository.getOne(shipment.getId())).thenReturn(shipment);
+        when(customerRepository.getById(customer.getId())).thenReturn(Optional.of(customer));
+        ShipmentNameDTO customerByShipmentIdExpected = new ShipmentNameDTO(
+                customer.getName(),shipment.getDescription());
+        ShipmentNameDTO customerByShipmentIdActual = shipmentService
+                .getCustomerByShipmentId(shipment.getId());
+
+        assertEquals(customerByShipmentIdExpected.getName(),customerByShipmentIdActual.getName());
+        assertEquals(customerByShipmentIdExpected.getDescription(),customerByShipmentIdActual.getDescription());
+    }
+
+    }
