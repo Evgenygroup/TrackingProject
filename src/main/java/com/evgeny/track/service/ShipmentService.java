@@ -4,6 +4,7 @@ import com.evgeny.track.dto.ShipmentNameDTO;
 import com.evgeny.track.entity.CustomerEntity;
 import com.evgeny.track.entity.ShipmentEntity;
 import com.evgeny.track.exception.CustomerNotFoundException;
+import com.evgeny.track.exception.ShipmentNotFoundException;
 import com.evgeny.track.repository.CustomerRepository;
 import com.evgeny.track.repository.ShipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,11 +49,12 @@ public class ShipmentService {
     }
 
     public ShipmentNameDTO getCustomerByShipmentId(long shipmentId){
-        ShipmentEntity shipment = shipmentRepository.getOne(shipmentId);
-        Long customerId =shipment.getCustomer().getId();
-        Optional<CustomerEntity> customer = customerRepository.getById(customerId);
-        customer.orElseThrow(()->new CustomerNotFoundException(customerId));
-        return new ShipmentNameDTO(customer.get().getName(),shipment.getDescription());
+        ShipmentEntity shipment = shipmentRepository
+                .findById(shipmentId).orElseThrow(()->new ShipmentNotFoundException(shipmentId));
+      //  Long customerId =shipment.getCustomer().getId();
+       // Optional<CustomerEntity> customer = customerRepository.getById(customerId);
+      //  customer.orElseThrow(()->new CustomerNotFoundException(customerId));
+        return new ShipmentNameDTO(shipment.getCustomer().getName(),shipment.getDescription());
     }
 
 
