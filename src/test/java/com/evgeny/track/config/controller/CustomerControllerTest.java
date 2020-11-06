@@ -1,5 +1,6 @@
-package com.evgeny.track.config;
+package com.evgeny.track.config.controller;
 
+import com.evgeny.track.config.TestConfig;
 import com.evgeny.track.controller.CustomerController;
 import com.evgeny.track.dto.CustomerDto;
 import com.evgeny.track.entity.CustomerEntity;

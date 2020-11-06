@@ -29,9 +29,9 @@ public class TrackingServiceResourceIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
+                .andExpect(jsonPath("$[0].id").exists())
+                //.andExpect(jsonPath("$[0].shipments").exists())
                 .andExpect(jsonPath("$[0].name").exists())
-                .andExpect(jsonPath("$[0].shipments").exists())
-                .andExpect(jsonPath("$[0].customerId").exists())
 
 
         ;
