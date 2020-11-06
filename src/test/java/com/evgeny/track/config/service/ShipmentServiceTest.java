@@ -4,6 +4,7 @@ import com.evgeny.track.dto.ShipmentNameDTO;
 import com.evgeny.track.entity.CustomerEntity;
 import com.evgeny.track.entity.ShipmentEntity;
 import com.evgeny.track.exception.CustomerNotFoundException;
+import com.evgeny.track.exception.ShipmentNotFoundException;
 import com.evgeny.track.repository.CustomerRepository;
 import com.evgeny.track.repository.ShipmentRepository;
 import com.evgeny.track.service.CustomerService;
@@ -88,6 +89,8 @@ public class ShipmentServiceTest {
         verify(shipmentRepository, times(0)).findAllShipmentsByCustomerId(any());
         assertEquals("Customer not found", exception.getMessage());
     }
+
+
     @Test
     public void testGetCustomerByShipmentId() {
         CustomerEntity customer = new CustomerEntity(1L, "Evgeny Grazhdansky");
@@ -97,8 +100,7 @@ public class ShipmentServiceTest {
                 customer,
                 null);
 
-        when(shipmentRepository.getOne(shipment.getId())).thenReturn(shipment);
-        when(customerRepository.getById(customer.getId())).thenReturn(Optional.of(customer));
+        when(shipmentRepository.findById(shipment.getId())).thenReturn(Optional.of(shipment));
         ShipmentNameDTO customerByShipmentIdExpected = new ShipmentNameDTO(
                 customer.getName(),shipment.getDescription());
         ShipmentNameDTO customerByShipmentIdActual = shipmentService
@@ -106,6 +108,20 @@ public class ShipmentServiceTest {
 
         assertEquals(customerByShipmentIdExpected.getName(),customerByShipmentIdActual.getName());
         assertEquals(customerByShipmentIdExpected.getDescription(),customerByShipmentIdActual.getDescription());
+    }
+
+
+
+    @Test
+    public void testGetCustomerByShipmentIdNotFound() {
+        Long wrongId=2345L;
+        Exception exception = assertThrows(ShipmentNotFoundException.class, () ->
+                shipmentService.getCustomerByShipmentId(wrongId));
+
+        verify(shipmentRepository, times(1)).findById(wrongId);
+        assertEquals("Shipment not found", exception.getMessage());
+
+
     }
 
     }
