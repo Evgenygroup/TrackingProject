@@ -30,6 +30,9 @@ public class TrackingService {
     }
 
     public TrackingEntity addTracking(TrackingEntity tracking) {
+        shipmentRepository
+                .findById(tracking.getShipmentId())
+                .orElseThrow(()->new ShipmentNotFoundException(tracking.getShipmentId()));
         return trackingRepository.save(tracking);
     }
 
