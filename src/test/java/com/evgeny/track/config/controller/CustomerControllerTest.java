@@ -3,8 +3,6 @@ package com.evgeny.track.config.controller;
 import com.evgeny.track.config.TestConfig;
 import com.evgeny.track.controller.CustomerController;
 import com.evgeny.track.entity.CustomerEntity;
-import com.evgeny.track.entity.ShipmentEntity;
-import com.evgeny.track.entity.TrackingEntity;
 import com.evgeny.track.exception.CustomerNotFoundException;
 import com.evgeny.track.service.CustomerService;
 import com.fasterxml.jackson.databind.ObjectMapper;

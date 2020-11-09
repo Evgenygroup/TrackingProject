@@ -1,4 +1,5 @@
 package com.evgeny.track.config.controller;
+
 import com.evgeny.track.config.TestConfig;
 import com.evgeny.track.controller.ShipmentController;
 import com.evgeny.track.dto.ShipmentNameDTO;
@@ -42,7 +43,7 @@ public class ShipmentControllerTest {
         when(service.getShipmentsByCustomerId(customerId))
                 .thenReturn(createListOfShipments());
 
-        mvc.perform(get("/api/shipments/{customerId}/shipments",customerId)
+        mvc.perform(get("/api/shipments/{customerId}/shipments", customerId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -62,7 +63,7 @@ public class ShipmentControllerTest {
         when(service.getShipmentsByCustomerId(fakeCustomerId))
                 .thenThrow(new CustomerNotFoundException(fakeCustomerId));
 
-        mvc.perform(get("/api/shipments/{customerId}/shipments",fakeCustomerId)
+        mvc.perform(get("/api/shipments/{customerId}/shipments", fakeCustomerId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andDo(print());
@@ -73,12 +74,12 @@ public class ShipmentControllerTest {
 
     @Test
     public void testAddShipmentByCustomerIdSuccess() throws Exception {
-        ShipmentEntity shipmentEntity = new ShipmentEntity(null,"Sony TV",null,null);
-        ShipmentEntity savedShipmentEntity = new ShipmentEntity(5L,"Sony TV",null,null);
+        ShipmentEntity shipmentEntity = new ShipmentEntity(null, "Sony TV", null, null);
+        ShipmentEntity savedShipmentEntity = new ShipmentEntity(5L, "Sony TV", null, null);
 
         when(service.addShipmentByCustomerId(7L, shipmentEntity)).thenReturn(savedShipmentEntity);
 
-        mvc.perform(post("/api/shipments/{customerId}/shipment",7L)
+        mvc.perform(post("/api/shipments/{customerId}/shipment", 7L)
                 .content("{\"description\": \"Sony TV\",\"customerId\":\"7\"}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -86,33 +87,33 @@ public class ShipmentControllerTest {
                 .andExpect(jsonPath("$.id").value("5"))
                 .andExpect(jsonPath("$.description").value("Sony TV"));
 
-        verify(service, times(1)).addShipmentByCustomerId(7L,shipmentEntity);
+        verify(service, times(1)).addShipmentByCustomerId(7L, shipmentEntity);
     }
 
     @Test
     public void testAddShipmentByCustomerIdNotFound() throws Exception {
-        ShipmentEntity shipmentEntity = new ShipmentEntity(null,"Sony TV",null,null);
+        ShipmentEntity shipment = new ShipmentEntity(null, "Sony TV", null, null);
         Long fakecustomerId = 12345L;
-        when(service.addShipmentByCustomerId(fakecustomerId, shipmentEntity))
+        when(service.addShipmentByCustomerId(fakecustomerId, shipment))
                 .thenThrow(new CustomerNotFoundException(fakecustomerId));
 
-        mvc.perform(post("/api/shipments/{customerId}/shipment",fakecustomerId)
+        mvc.perform(post("/api/shipments/{customerId}/shipment", fakecustomerId)
                 .content("{\"description\": \"Sony TV\",\"customerId\":\"12345\"}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andDo(print());
 
-        verify(service, times(1)).addShipmentByCustomerId(fakecustomerId,shipmentEntity);
+        verify(service, times(1)).addShipmentByCustomerId(fakecustomerId, shipment);
     }
 
 
     @Test
-    public void testGetCustomerNameByShipmentIdSuccess()throws Exception {
+    public void testGetCustomerNameByShipmentIdSuccess() throws Exception {
         Long shipmentId = 25L;
         when(service.getCustomerByShipmentId(shipmentId))
-                .thenReturn(new ShipmentNameDTO("Evgeny Gr","Notebook"));
+                .thenReturn(new ShipmentNameDTO("Evgeny Gr", "Notebook"));
 
-        mvc.perform(get("/api/shipments/{shipmentId}",shipmentId)
+        mvc.perform(get("/api/shipments/{shipmentId}", shipmentId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -124,12 +125,12 @@ public class ShipmentControllerTest {
     }
 
     @Test
-    public void testGetCustomerNameByShipmentIdNotFound()throws Exception {
+    public void testGetCustomerNameByShipmentIdNotFound() throws Exception {
         Long shipmentId = 25L;
         when(service.getCustomerByShipmentId(shipmentId))
                 .thenThrow(new CustomerNotFoundException(null));
 
-        mvc.perform(get("/api/shipments/{shipmentId}",shipmentId)
+        mvc.perform(get("/api/shipments/{shipmentId}", shipmentId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andDo(print());
@@ -139,11 +140,11 @@ public class ShipmentControllerTest {
     }
 
     private List<ShipmentEntity> createListOfShipments() {
-        
-        ShipmentEntity shipment1 = new ShipmentEntity(2L,"Bosch",null,null);
-        ShipmentEntity shipment2 = new ShipmentEntity(3L,"TP-Link",null,null);
-        ShipmentEntity shipment3 = new ShipmentEntity(4L,"Notebook",null,null );
-        return Arrays.asList(shipment1,shipment2,shipment3);
+
+        ShipmentEntity shipment1 = new ShipmentEntity(2L, "Bosch", null, null);
+        ShipmentEntity shipment2 = new ShipmentEntity(3L, "TP-Link", null, null);
+        ShipmentEntity shipment3 = new ShipmentEntity(4L, "Notebook", null, null);
+        return Arrays.asList(shipment1, shipment2, shipment3);
     }
 
 }
