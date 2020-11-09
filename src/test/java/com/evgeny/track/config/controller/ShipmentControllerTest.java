@@ -1,14 +1,10 @@
 package com.evgeny.track.config.controller;
-
 import com.evgeny.track.config.TestConfig;
 import com.evgeny.track.controller.ShipmentController;
 import com.evgeny.track.dto.ShipmentNameDTO;
-import com.evgeny.track.entity.CustomerEntity;
 import com.evgeny.track.entity.ShipmentEntity;
-import com.evgeny.track.entity.TrackingEntity;
 import com.evgeny.track.exception.CustomerNotFoundException;
 import com.evgeny.track.service.ShipmentService;
-import com.evgeny.track.service.TrackingService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,6 +139,7 @@ public class ShipmentControllerTest {
     }
 
     private List<ShipmentEntity> createListOfShipments() {
+        
         ShipmentEntity shipment1 = new ShipmentEntity(2L,"Bosch",null,null);
         ShipmentEntity shipment2 = new ShipmentEntity(3L,"TP-Link",null,null);
         ShipmentEntity shipment3 = new ShipmentEntity(4L,"Notebook",null,null );

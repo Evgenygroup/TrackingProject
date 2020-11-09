@@ -2,7 +2,6 @@ package com.evgeny.track.config.controller;
 
 import com.evgeny.track.config.TestConfig;
 import com.evgeny.track.controller.CustomerController;
-import com.evgeny.track.dto.CustomerDto;
 import com.evgeny.track.entity.CustomerEntity;
 import com.evgeny.track.entity.ShipmentEntity;
 import com.evgeny.track.entity.TrackingEntity;
@@ -21,7 +20,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -37,8 +35,6 @@ public class CustomerControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @Autowired
-    private ObjectMapper mapper;
 
     @MockBean
     private CustomerService service;
@@ -46,26 +42,10 @@ public class CustomerControllerTest {
     private CustomerEntity savedCustomer;
 
     @Before
-    public void init(){
-        savedCustomer=mockCustomerEntity();
+    public void init() {
+        savedCustomer = mockCustomerEntity();
     }
 
-    @Test
-    public void testCreateCustomerSuccess() throws Exception {
-        CustomerEntity newCustomer = new CustomerEntity(null,"Evgeny Grazhdansky");
-
-        when(service.createCustomer(newCustomer)).thenReturn(savedCustomer);
-
-        mvc.perform(post("/api/customers")
-                .content("{\"name\": \"Evgeny Grazhdansky\"}")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(jsonPath("$.id").value("6"))
-                .andExpect(jsonPath("$.name").value("Evgeny Grazhdansky"));
-
-        verify(service, times(1)).createCustomer(newCustomer);
-    }
 
     @Test
     public void testGetAllCustomersSuccess() throws Exception {
@@ -89,10 +69,10 @@ public class CustomerControllerTest {
 
     @Test
     public void testGetCustomerByIdSuccess() throws Exception {
-       when(service.getCustomerByCustomerId(savedCustomer.getId()))
+        when(service.getCustomerByCustomerId(savedCustomer.getId()))
                 .thenReturn(savedCustomer);
 
-        mvc.perform(get("/api/customers/{id}",savedCustomer.getId())
+        mvc.perform(get("/api/customers/{id}", savedCustomer.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -109,22 +89,21 @@ public class CustomerControllerTest {
         when(service.getCustomerByCustomerId(fakeId))
                 .thenThrow(new CustomerNotFoundException(fakeId));
 
-        mvc.perform(get("/api/customers/{id}",fakeId)
+        mvc.perform(get("/api/customers/{id}", fakeId)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andDo(print());
     }
 
+
     @Test
-    public void testEditCustomerSuccess() throws Exception {
-        CustomerEntity newCustomer = new CustomerEntity(null,"Evgeny Grazhdansky");
-        String json = mapper.writeValueAsString(new CustomerDto(6L,"Evgeny Grazhdansky"));
+    public void testCreateNewCustomerSuccess() throws Exception {
+        CustomerEntity newCustomer = new CustomerEntity(null, "Evgeny Grazhdansky");
 
+        when(service.createCustomer(newCustomer)).thenReturn(savedCustomer);
 
-        when(service.updateCustomer(6L,newCustomer)).thenReturn(savedCustomer);
-
-        mvc.perform(put("/api/customers/6")
-                .content(json)
+        mvc.perform(post("/api/customers")
+                .content("{\"name\": \"Evgeny Grazhdansky\"}")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -133,6 +112,7 @@ public class CustomerControllerTest {
 
         verify(service, times(1)).createCustomer(newCustomer);
     }
+
 
     @Test
     public void removeCustomerByIdSuccess() throws Exception {
@@ -157,60 +137,20 @@ public class CustomerControllerTest {
     }
 
 
-
-
-
     private List<CustomerEntity> createListOfCustomers() {
-
         CustomerEntity customer1 = savedCustomer;
-        CustomerEntity customer2=new CustomerEntity(7L,"John Smith");
-        CustomerEntity customer3=new CustomerEntity(8L,"Sherlock Holmes");
-        return Arrays.asList(customer1, customer2,customer3);
+        CustomerEntity customer2 = new CustomerEntity(7L, "John Smith");
+        CustomerEntity customer3 = new CustomerEntity(8L, "Sherlock Holmes");
+        return Arrays.asList(customer1, customer2, customer3);
     }
 
 
-    private CustomerEntity mockCustomerEntity(){
-        return new CustomerEntity(6L,"Evgeny Grazhdansky");
+    private CustomerEntity mockCustomerEntity() {
+        return new CustomerEntity(6L, "Evgeny Grazhdansky");
     }
-
-    private CustomerDto mockReturnedCustomerDto(){
-        return new CustomerDto(6L,"Evgeny Grazhdansky");
-    }
-
-
 
 
 }
 
-/*Date date =new Date();
-        TrackingEntity tracking1 =new TrackingEntity (1L,"delivered",3L,date);
-        TrackingEntity tracking2 =new TrackingEntity(2L,"returned",3L,date);
-        TrackingEntity tracking3 =new TrackingEntity(3L,"initiated",4L,date);
-        TrackingEntity tracking4 =new TrackingEntity(4L,"cancelled",4L,date);
-        TrackingEntity tracking5 =new TrackingEntity(5L,"returned",5L, date);
 
 
-       List<TrackingEntity> statuses1 = Arrays.asList(tracking1,tracking2);
-       List<TrackingEntity> statuses2=Arrays.asList(tracking3,tracking4);
-       List<TrackingEntity> statuses3=Arrays.asList(tracking5);
-
-        ShipmentEntity shipment1 = new ShipmentEntity(
-                3L,
-                "Bosch",
-                customer1,
-                statuses1);
-        ShipmentEntity shipment2 = new ShipmentEntity(
-                2L,
-                "TP-Link",
-                customer2,
-                statuses2
-        );
-        ShipmentEntity shipment3=new ShipmentEntity(
-                4L,
-                "Notebook",
-                customer2,
-                statuses3
-        );
-
-         // .andExpect(jsonPath("$[0].shipments").exists())
-*/
