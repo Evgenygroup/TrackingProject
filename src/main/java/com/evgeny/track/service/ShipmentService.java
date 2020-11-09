@@ -33,7 +33,7 @@ public class ShipmentService {
 
     public ShipmentEntity addShipmentByCustomerId(Long customerId, ShipmentEntity shipment) {
         CustomerEntity customer = customerRepository
-                .getById(customerId)
+                .findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException(customerId));
         shipment.setCustomer(customer);
 

@@ -50,7 +50,7 @@ public class ShipmentController {
     private ShipmentEntity convertToEntity(ShipmentDTO shipmentDTO) {
         ShipmentEntity shipment = new ShipmentEntity();
         shipment.setDescription(shipmentDTO.getDescription());
-        shipment.setId(shipmentDTO.getId());
+       // shipment.setId(shipmentDTO.getId());
         return  shipment;
     }
 

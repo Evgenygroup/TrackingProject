@@ -9,7 +9,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -24,7 +23,6 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @RunWith(SpringRunner.class)
-//@RunWith(MockitoJUnitRunner.class)
 public class CustomerServiceTest {
 
     @Mock
@@ -34,24 +32,25 @@ public class CustomerServiceTest {
     private CustomerService customerService;
 
     @Test
-    public void testCreateCustomer(){
+    public void testCreateCustomer() {
 
-        CustomerEntity newCustomer = new CustomerEntity(null,"Evgeny Grazhdansky");
-        CustomerEntity savedCustomer = new CustomerEntity(1L,"Evgeny Grazhdansky");
+        CustomerEntity newCustomer = new CustomerEntity(null, "Evgeny Grazhdansky");
+        CustomerEntity savedCustomer = new CustomerEntity(1L, "Evgeny Grazhdansky");
         when(customerRepository.save(newCustomer)).thenReturn(savedCustomer);
 
-        CustomerEntity returnCustomer = customerService.createCustomer(newCustomer);
+        CustomerEntity returnedCustomer = customerService.createCustomer(newCustomer);
 
-                assertEquals(returnCustomer.getName(),newCustomer.getName());
-        verify(customerRepository, times(1)).save(newCustomer);               ;
+        assertEquals(returnedCustomer.getName(), newCustomer.getName());
+        verify(customerRepository, times(1)).save(newCustomer);
+        ;
 
 
     }
 
     @Test
-    public void testGetAllCustomersNoCustomers(){
+    public void testGetAllCustomersNoCustomers() {
 
-        List<CustomerEntity> listOfSavedCustomers=Arrays.asList();
+        List<CustomerEntity> listOfSavedCustomers = Arrays.asList();
 
         when(customerRepository.findAll()).thenReturn(listOfSavedCustomers);
 
@@ -62,11 +61,11 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void testGetAllCustomers(){
-        CustomerEntity customer1=new CustomerEntity(6L,"Evgeny Grazhdansky");
-        CustomerEntity customer2=new CustomerEntity(7L,"John Smith");
-        CustomerEntity customer3=new CustomerEntity(8L,"Sherlock Holmes");
-        List<CustomerEntity> listOfSavedCustomers=Arrays.asList(customer1, customer2,customer3);
+    public void testGetAllCustomers() {
+        CustomerEntity customer1 = new CustomerEntity(6L, "Evgeny Grazhdansky");
+        CustomerEntity customer2 = new CustomerEntity(7L, "John Smith");
+        CustomerEntity customer3 = new CustomerEntity(8L, "Sherlock Holmes");
+        List<CustomerEntity> listOfSavedCustomers = Arrays.asList(customer1, customer2, customer3);
 
         when(customerRepository.findAll()).thenReturn(listOfSavedCustomers);
 
@@ -77,20 +76,20 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void testGetCustomerByCustomerIdFound(){
-        CustomerEntity savedCustomer = new CustomerEntity(1L,"Evgeny Grazhdansky");
+    public void testGetCustomerByCustomerIdFound() {
+        CustomerEntity savedCustomer = new CustomerEntity(1L, "Evgeny Grazhdansky");
 
         when(customerRepository.getById(savedCustomer.getId())).thenReturn(Optional.of(savedCustomer));
         CustomerEntity customerFound = customerService.getCustomerByCustomerId(savedCustomer.getId());
 
-        assertEquals(savedCustomer.getId(),customerFound.getId());
-        assertEquals(savedCustomer.getName(),customerFound.getName());
+        assertEquals(savedCustomer.getId(), customerFound.getId());
+        assertEquals(savedCustomer.getName(), customerFound.getName());
 
     }
 
     @Test
-    public void testGetCustomerByCustomerIdNotFound(){
-        Long wrongId=2345L;
+    public void testGetCustomerByCustomerIdNotFound() {
+        Long wrongId = 2345L;
         Exception exception = assertThrows(CustomerNotFoundException.class, () ->
                 customerService.getCustomerByCustomerId(wrongId));
 
@@ -98,38 +97,11 @@ public class CustomerServiceTest {
         assertEquals("Customer not found", exception.getMessage());
 
     }
-    @Test
-    public void testUpdateCustomer(){
-        CustomerEntity newCustomer = new CustomerEntity(1L,"Evgeny Grazhdansky");
-        CustomerEntity oldCustomer = new CustomerEntity(1L,"John Smith");
 
-        when(customerRepository.getById(newCustomer.getId())).thenReturn(Optional.of(oldCustomer));
-        CustomerEntity customerActual = customerService.updateCustomer(1L, newCustomer);
-
-        assertEquals(newCustomer.getId(),customerActual.getId());
-        assertEquals(newCustomer.getName(),customerActual.getName());
-
-        verify(customerRepository, times(1)).save(any());
-    }
-
-    @Test
-    public void testUpdateCustomerNotFound(){
-
-        Long wrongId=2345L;
-        CustomerEntity newCustomer = new CustomerEntity(1L,"Evgeny Grazhdansky");
-
-        Exception exception = assertThrows(CustomerNotFoundException.class, () ->
-                customerService.updateCustomer(wrongId,newCustomer));
-
-        verify(customerRepository, times(1)).findById(any());
-        verify(customerRepository, times(0)).save(any());
-        assertEquals("Customer not found", exception.getMessage());
-
-    }
 
     @Test
     public void testDeleteCustomerCustomerFound() {
-        CustomerEntity customerToDelete = new CustomerEntity(1L,"Evgeny Grazhdansky");
+        CustomerEntity customerToDelete = new CustomerEntity(1L, "Evgeny Grazhdansky");
         when(customerRepository.findById(customerToDelete.getId()))
                 .thenReturn(Optional.of(customerToDelete));
 
@@ -139,9 +111,9 @@ public class CustomerServiceTest {
     }
 
     @Test
-    public void testDeletecustomerNotFound(){
+    public void testDeletecustomerNotFound() {
 
-        Long wrongId=2345L;
+        Long wrongId = 2345L;
         Exception exception = assertThrows(CustomerNotFoundException.class, () ->
                 customerService.getCustomerByCustomerId(wrongId));
 
