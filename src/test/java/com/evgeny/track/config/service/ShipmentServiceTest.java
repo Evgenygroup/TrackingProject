@@ -21,10 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
-import static junit.framework.Assert.assertNotNull;
 import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -64,21 +61,32 @@ public class ShipmentServiceTest {
 
     }
 
+    @Test
+    public void testAddShipmentByCustomerIdNotFound(){
+
+        Long wrongId=2345L;
+        Exception exception = assertThrows(CustomerNotFoundException.class, () ->
+                shipmentService.addShipmentByCustomerId(wrongId,any()));
+
+        verify(shipmentRepository, times(0)).save(any());
+        assertEquals("Customer not found", exception.getMessage());
+    }
+
 
     @Test
-    public void testGetShipmentsByCustomerId(){
+    public void testGetShipmentsByCustomerIdSuccess(){
 
         CustomerEntity customer = new CustomerEntity(1L, "Evgeny Grazhdansky");
         ShipmentEntity shipment1 = new ShipmentEntity(1L,"description1",customer,null);
         ShipmentEntity shipment2 = new ShipmentEntity(2L,"description2",customer,null);
         List<ShipmentEntity> shipmentsExpected = Arrays.asList(shipment1,shipment2);
 
-        when(customerRepository.getById(customer.getId())).thenReturn(Optional.of(customer));
+        when(customerRepository.findById(customer.getId())).thenReturn(Optional.of(customer));
         when(shipmentRepository.findAllShipmentsByCustomerId(customer.getId()))
                 .thenReturn(shipmentsExpected);
         List<ShipmentEntity> shipments = shipmentService.getShipmentsByCustomerId(customer.getId());
         assertArrayEquals(shipmentsExpected.toArray(), shipments.toArray());
-        verify(customerRepository, times(1)).getById(customer.getId());
+        verify(customerRepository, times(1)).findById(customer.getId());
     }
 
     @Test

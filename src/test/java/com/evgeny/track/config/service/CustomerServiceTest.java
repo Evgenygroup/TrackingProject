@@ -79,7 +79,7 @@ public class CustomerServiceTest {
     public void testGetCustomerByCustomerIdFound() {
         CustomerEntity savedCustomer = new CustomerEntity(1L, "Evgeny Grazhdansky");
 
-        when(customerRepository.getById(savedCustomer.getId())).thenReturn(Optional.of(savedCustomer));
+        when(customerRepository.findById(savedCustomer.getId())).thenReturn(Optional.of(savedCustomer));
         CustomerEntity customerFound = customerService.getCustomerByCustomerId(savedCustomer.getId());
 
         assertEquals(savedCustomer.getId(), customerFound.getId());
@@ -93,7 +93,7 @@ public class CustomerServiceTest {
         Exception exception = assertThrows(CustomerNotFoundException.class, () ->
                 customerService.getCustomerByCustomerId(wrongId));
 
-        verify(customerRepository, times(1)).getById(any());
+        verify(customerRepository, times(1)).findById(any());
         assertEquals("Customer not found", exception.getMessage());
 
     }
