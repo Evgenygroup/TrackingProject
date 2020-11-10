@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 public class TrackingService {
@@ -17,23 +17,32 @@ public class TrackingService {
     private ShipmentRepository shipmentRepository;
 
     @Autowired
-    public TrackingService(TrackingRepositiory trackingRepository,ShipmentRepository shipmentRepository) {
+    public TrackingService(TrackingRepositiory trackingRepository, ShipmentRepository shipmentRepository) {
         this.trackingRepository = trackingRepository;
-        this.shipmentRepository=shipmentRepository;
+        this.shipmentRepository = shipmentRepository;
     }
-   
+
 
     public List<TrackingEntity> getTrackingsByShipmentId(Long shipmentId) {
-        shipmentRepository
-                .findById(shipmentId).orElseThrow(()->new ShipmentNotFoundException(shipmentId));
+
+        getShipmentById(shipmentId);
+
         return trackingRepository.findAllTrackingsByShipmentId(shipmentId);
     }
 
+
     public TrackingEntity addTracking(TrackingEntity tracking) {
-        shipmentRepository
-                .findById(tracking.getShipmentId())
-                .orElseThrow(()->new ShipmentNotFoundException(tracking.getShipmentId()));
+
+        getShipmentById(tracking.getShipmentId());
+
         return trackingRepository.save(tracking);
+    }
+
+
+    private ShipmentEntity getShipmentById(Long shipmentId) {
+        return shipmentRepository
+                .findById(shipmentId)
+                .orElseThrow(() -> new ShipmentNotFoundException(shipmentId));
     }
 
 }

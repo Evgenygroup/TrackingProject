@@ -97,10 +97,42 @@ public class CustomerServiceTest {
         assertEquals("Customer not found", exception.getMessage());
 
     }
+    @Test
+    public void testUpdateCustomer(){
+        CustomerEntity newCustomer = new CustomerEntity(1L,"Evgeny Grazhdansky");
+        CustomerEntity oldCustomer = new CustomerEntity(1L,"John Smith");
+
+        when(customerRepository.findById(newCustomer.getId())).thenReturn(Optional.of(oldCustomer));
+        when(customerRepository.save(newCustomer)).thenReturn(newCustomer);
+        CustomerEntity customerActual = customerService.updateCustomer(1L, newCustomer);
+
+        assertEquals(newCustomer.getId(),customerActual.getId());
+        assertEquals(newCustomer.getName(),customerActual.getName());
+
+        verify(customerRepository, times(1)).save(any());
+    }
 
 
     @Test
-    public void testDeleteCustomerCustomerFound() {
+    public void testUpdateCustomerNotFound(){
+
+        Long wrongId=2345L;
+        CustomerEntity newCustomer = new CustomerEntity(1L,"Evgeny Grazhdansky");
+
+        Exception exception = assertThrows(CustomerNotFoundException.class, () ->
+                customerService.updateCustomer(wrongId,newCustomer));
+
+        verify(customerRepository, times(1)).findById(wrongId);
+        verify(customerRepository, times(0)).save(any());
+        assertEquals("Customer not found", exception.getMessage());
+
+    }
+
+
+
+
+    @Test
+    public void testDeleteCustomerSuccess() {
         CustomerEntity customerToDelete = new CustomerEntity(1L, "Evgeny Grazhdansky");
         when(customerRepository.findById(customerToDelete.getId()))
                 .thenReturn(Optional.of(customerToDelete));
@@ -115,7 +147,7 @@ public class CustomerServiceTest {
 
         Long wrongId = 2345L;
         Exception exception = assertThrows(CustomerNotFoundException.class, () ->
-                customerService.getCustomerByCustomerId(wrongId));
+                customerService.deleteCustomer(wrongId));
 
         verify(customerRepository, times(0)).deleteById(wrongId);
         assertEquals("Customer not found", exception.getMessage());
