@@ -2,7 +2,7 @@
 
 ## Project description
 
-An application that handles customer's shipments with a possibility to add/edit/view customers,shipments as well as track shipment history. 
+An application that handles customer's shipments with a possibility to add/edit/view customers, their shipments as well as track shipment history. 
 To run the project you need to have installed [Docker](http://docker.com).
 
 ### Install Docker on Ubuntu:
@@ -18,5 +18,5 @@ Run in the project directory:
 ```
 docker-compose up --build -d
 ```
-Once the application is up and running it can be seen on http://localhost:8080/. Its endpoints will also be exposed at http://localhost:8080/swagger-ui.html
+Once the application is up and running it can be seen on localhost http://localhost:8080/. Its endpoints will also be exposed at http://localhost:8080/swagger-ui.html
 
